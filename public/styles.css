@@ -1,0 +1,110 @@
+:root{
+  --ink:#111;
+  --muted:#686868;
+  --line:#dedede;
+  --paper:#fff;
+  --soft:#f6f6f4;
+  --max:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.shell{width:min(calc(100% - 48px),var(--max));margin:0 auto}
+.nav{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{font-size:15px;font-weight:800;letter-spacing:-.03em;text-decoration:none}
+.brand span{font-weight:400;color:var(--muted)}
+.nav nav{display:flex;gap:28px}
+.nav nav a{font-size:13px;text-decoration:none;color:#333}
+.hero{padding:110px 0 105px}
+.eyebrow,.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.hero h1{max-width:1030px;font-size:clamp(44px,7vw,92px);line-height:.96;letter-spacing:-.065em;margin:25px 0 32px;font-weight:700}
+.lede{font-size:21px;line-height:1.5;max-width:760px;color:#3e3e3e}
+.actions{display:flex;gap:12px;margin-top:42px;flex-wrap:wrap}
+.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid #111;padding:15px 20px;font-size:13px;font-weight:700;text-decoration:none;min-height:48px}
+.button.primary{background:#111;color:white}
+.button.full{width:100%}
+.micro{font-size:12px;line-height:1.55;color:var(--muted);margin-top:15px}
+.statement{background:#111;color:#fff}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);padding:52px 0}
+.metrics div{display:flex;align-items:baseline;gap:16px;padding:0 28px;border-right:1px solid #383838}
+.metrics div:first-child{padding-left:0}
+.metrics div:last-child{border-right:0}
+.metrics strong{font-size:44px;letter-spacing:-.06em}
+.metrics span{font-size:13px;color:#bbb;max-width:180px;line-height:1.35}
+.section{padding:100px 0;border-bottom:1px solid var(--line)}
+.section-label{margin-bottom:40px}
+.split{display:grid;grid-template-columns:1.4fr .8fr;gap:90px}
+h2{font-size:clamp(34px,4.7vw,62px);line-height:1.02;letter-spacing:-.05em;margin:0;font-weight:650}
+.body-copy p{font-size:17px;line-height:1.65;color:#444;margin:0 0 20px}
+.feed-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:32px}
+.feed-head h2{font-size:42px}
+.feed-head p{max-width:650px;color:#555;line-height:1.55}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap}
+.filter{font:inherit;font-size:12px;background:white;border:1px solid var(--line);padding:9px 13px;cursor:pointer}
+.filter.active{background:#111;color:#fff;border-color:#111}
+.records{border-top:1px solid #111}
+.record{padding:32px 0;border-bottom:1px solid var(--line)}
+.record[hidden]{display:none}
+.record-top{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.tag{font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.record time{font-size:12px;color:var(--muted)}
+.record h3{font-size:30px;letter-spacing:-.035em;margin:18px 0 8px}
+.record>p{font-size:15px;color:#555;margin:0 0 24px}
+.record dl{display:grid;grid-template-columns:repeat(4,1fr);margin:0 0 25px;gap:18px}
+.record dl div{border-top:1px solid var(--line);padding-top:12px}
+dt{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:7px}
+dd{margin:0;font-size:13px}
+.source-link{font-size:12px;font-weight:700}
+.notice{margin-top:28px;background:var(--soft);padding:21px;font-size:13px;line-height:1.55}
+.method-grid,.coverage-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #111}
+.method,.coverage-grid>div{padding:28px 26px 20px 0;border-right:1px solid var(--line);min-height:210px}
+.method:not(:first-child),.coverage-grid>div:not(:first-child){padding-left:26px}
+.method:last-child,.coverage-grid>div:last-child{border-right:0}
+.method span{font-size:11px;color:var(--muted)}
+.method h3,.coverage-grid h3{font-size:22px;letter-spacing:-.03em;margin:30px 0 10px}
+.method p,.coverage-grid p{font-size:14px;color:#555;line-height:1.55}
+.coverage-grid{grid-template-columns:repeat(3,1fr)}
+.border-top{border-top:1px solid var(--line);padding-top:18px;margin-top:30px}
+.pricing{background:#111;color:white;border:0}
+.price-layout{display:grid;grid-template-columns:1fr 430px;gap:100px;align-items:start}
+.pricing .eyebrow{color:#aaa;margin-bottom:26px}
+.price-card{border:1px solid #484848;padding:30px}
+.price{font-size:68px;line-height:1;letter-spacing:-.06em;margin-bottom:30px}
+.price>span{font-size:16px;vertical-align:top;letter-spacing:0;margin-right:4px}
+.price small{font-size:13px;letter-spacing:0;color:#aaa;margin-left:8px}
+.price-card ul{list-style:none;padding:0;margin:0 0 30px}
+.price-card li{font-size:14px;padding:12px 0;border-top:1px solid #333}
+.price-card .button.primary{background:#fff;color:#111}
+.price-card .micro{color:#9a9a9a}
+.faq details{border-top:1px solid var(--line);padding:22px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{font-size:17px;font-weight:650;cursor:pointer}
+.faq details p{max-width:760px;color:#555;line-height:1.6}
+.footer{height:110px;display:flex;align-items:center;justify-content:space-between;gap:30px;font-size:12px;color:var(--muted)}
+.footer a{font-weight:700;color:#111}
+@media(max-width:850px){
+  .nav nav{display:none}
+  .hero{padding:75px 0}
+  .hero h1{font-size:52px}
+  .metrics{grid-template-columns:1fr;padding:20px 0}
+  .metrics div{border-right:0;border-bottom:1px solid #383838;padding:22px 0}
+  .metrics div:last-child{border-bottom:0}
+  .split,.price-layout{grid-template-columns:1fr;gap:44px}
+  .method-grid,.coverage-grid{grid-template-columns:1fr}
+  .method,.coverage-grid>div,.method:not(:first-child),.coverage-grid>div:not(:first-child){border-right:0;border-bottom:1px solid var(--line);padding:24px 0;min-height:auto}
+  .record dl{grid-template-columns:1fr 1fr}
+  .feed-head{display:block}
+  .filter-row{margin-top:20px}
+  .price-layout{gap:40px}
+  .price-card{max-width:none}
+}
+@media(max-width:520px){
+  .shell{width:min(calc(100% - 28px),var(--max))}
+  .hero h1{font-size:43px}
+  .lede{font-size:18px}
+  .section{padding:72px 0}
+  .record dl{grid-template-columns:1fr}
+  .record h3{font-size:25px}
+  .footer{height:auto;padding:32px 0;align-items:flex-start;flex-direction:column}
+}
