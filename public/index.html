@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Canterbury development and consent intelligence for businesses that need to know what is being planned and consented.">
+  <title>CDI Canterbury — Development & Consent Intelligence</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="nav shell">
+    <a class="brand" href="#top" aria-label="CDI home">CDI<span>001</span></a>
+    <nav>
+      <a href="#feed">Sample feed</a>
+      <a href="#method">Method</a>
+      <a href="#pricing">Founding access</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <p class="eyebrow">Canterbury founding beta</p>
+      <h1>Know what is being planned and consented before it disappears into council registers.</h1>
+      <p class="lede">Council Development & Consent Intelligence turns fragmented building and resource-consent records into a single commercial opportunity feed for trades, suppliers, developers and property businesses.</p>
+      <div class="actions">
+        <a class="button primary" href="mailto:moseslovesemail@gmail.com?subject=CDI%20Canterbury%20Founding%20Access&body=Hi%20Moses%2C%0A%0AI%27m%20interested%20in%20CDI%20Canterbury%20Founding%20Access.%0A%0ABusiness%3A%20%0ATrade%20or%20sector%3A%20%0AArea%3A%20%0A">Request founding access</a>
+        <a class="button" href="#feed">See verified source sample</a>
+      </div>
+      <p class="micro">NZ$99/month + GST · manual invoice · cancel any time during beta</p>
+    </section>
+
+    <section class="statement">
+      <div class="shell metrics">
+        <div><strong>3</strong><span>Canterbury councils in pilot scope</span></div>
+        <div><strong>2</strong><span>consent families: building + resource</span></div>
+        <div><strong>1</strong><span>searchable commercial view</span></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="problem">
+      <div class="section-label">The product</div>
+      <div class="split">
+        <h2>Council records describe regulatory events. CDI organises them around commercial opportunities.</h2>
+        <div class="body-copy">
+          <p>A roofing company, HVAC contractor or supplier should not have to monitor multiple council websites, monthly registers and search systems to discover where development activity is emerging.</p>
+          <p>CDI collects, standardises and classifies those signals by location, consent stage, development type, scale and likely buyer relevance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="feed">
+      <div class="section-label">Verified source sample</div>
+      <div class="feed-head">
+        <div>
+          <h2>Current source proof</h2>
+          <p>These two records are reproduced from Waimakariri District Council's public eTrack results. They demonstrate source ingestion, not high-priority sales leads.</p>
+        </div>
+        <div class="filter-row" aria-label="sample feed filters">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="september">September</button>
+          <button class="filter" data-filter="august">August</button>
+        </div>
+      </div>
+
+      <div class="records" id="records">
+        <article class="record" data-month="september">
+          <div class="record-top">
+            <span class="tag">Building consent · lodged</span>
+            <time datetime="2026-09-08">8 Sep 2026</time>
+          </div>
+          <h3>123 Waikuku Beach Road, Waikuku</h3>
+          <p>Amendment — modification of durability periods to clause B2.3.1.</p>
+          <dl>
+            <div><dt>Council</dt><dd>Waimakariri District Council</dd></div>
+            <div><dt>Category</dt><dd>BC — Amendments</dd></div>
+            <div><dt>Source confidence</dt><dd>High</dd></div>
+            <div><dt>Opportunity priority</dt><dd>Low</dd></div>
+          </dl>
+          <a class="source-link" href="https://eservices.waimakariri.govt.nz/ePropertyPROD/%28S%28dgvqlh55nw5djnn2a2toylj5%29%29/P1/eTrack/eTrackApplicationSearchResults.aspx?Field=S&amp;Period=TM&amp;f=%24P1.ETR.SEARCH.STM&amp;r=P1.WMKWEBGUEST" target="_blank" rel="noreferrer">Open council source ↗</a>
+        </article>
+
+        <article class="record" data-month="august">
+          <div class="record-top">
+            <span class="tag">Building consent · lodged</span>
+            <time datetime="2026-08-31">31 Aug 2026</time>
+          </div>
+          <h3>1136 Tram Road, Waimakariri District</h3>
+          <p>Amendment — modification of durability periods to clause B2.3.1.</p>
+          <dl>
+            <div><dt>Council</dt><dd>Waimakariri District Council</dd></div>
+            <div><dt>Category</dt><dd>BC — Amendments</dd></div>
+            <div><dt>Source confidence</dt><dd>High</dd></div>
+            <div><dt>Opportunity priority</dt><dd>Low</dd></div>
+          </dl>
+          <a class="source-link" href="https://eservices.waimakariri.govt.nz/ePropertyPROD/%28S%28dgvqlh55nw5djnn2a2toylj5%29%29/P1/eTrack/eTrackApplicationSearchResults.aspx?Field=S&amp;Period=LM&amp;f=%24P1.ETR.SEARCH.SLM&amp;r=P1.WMKWEBGUEST" target="_blank" rel="noreferrer">Open council source ↗</a>
+        </article>
+      </div>
+
+      <div class="notice">
+        <strong>Beta status:</strong> the public sample is deliberately small. Full Christchurch, Selwyn and Waimakariri source ingestion is being built into the private customer feed. Building consent is treated as an intent signal, not evidence that construction has commenced.
+      </div>
+    </section>
+
+    <section class="section shell" id="method">
+      <div class="section-label">Method</div>
+      <div class="method-grid">
+        <div class="method"><span>01</span><h3>Collect</h3><p>Council APIs, downloadable registers, dashboards, subscriptions and public searches.</p></div>
+        <div class="method"><span>02</span><h3>Normalise</h3><p>Convert inconsistent council terminology into a common development schema while preserving raw provenance.</p></div>
+        <div class="method"><span>03</span><h3>Classify</h3><p>Identify development category, work type, project scale and current consent stage.</p></div>
+        <div class="method"><span>04</span><h3>Match</h3><p>Surface projects according to the commercial relevance of each customer's trade or sector.</p></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="coverage">
+      <div class="section-label">Initial coverage</div>
+      <div class="coverage-grid">
+        <div><h3>Christchurch City</h3><p>Issued building-consent feed.</p></div>
+        <div><h3>Selwyn District</h3><p>Building-consent subscriber feed + resource-consent discovery.</p></div>
+        <div><h3>Waimakariri District</h3><p>Building-consent register + public eTrack signals.</p></div>
+      </div>
+      <p class="micro border-top">V1 does not make applicant or owner names a core commercial field. Council-specific raw fields and source provenance are retained.</p>
+    </section>
+
+    <section class="pricing section" id="pricing">
+      <div class="shell price-layout">
+        <div>
+          <p class="eyebrow">Founding customer access</p>
+          <h2>Canterbury intelligence while the national engine is being built.</h2>
+        </div>
+        <div class="price-card">
+          <div class="price"><span>NZ$</span>99<small>/month + GST</small></div>
+          <ul>
+            <li>Private Canterbury opportunity feed</li>
+            <li>Building-consent signals</li>
+            <li>Resource-consent signals as coverage expands</li>
+            <li>Location, category and stage filtering</li>
+            <li>Source links and confidence labelling</li>
+            <li>Founding price protected for 12 months</li>
+          </ul>
+          <a class="button primary full" href="mailto:moseslovesemail@gmail.com?subject=CDI%20Canterbury%20Founding%20Access&body=Hi%20Moses%2C%0A%0AI%27m%20interested%20in%20CDI%20Canterbury%20Founding%20Access.%0A%0ABusiness%3A%20%0ATrade%20or%20sector%3A%20%0AArea%3A%20%0A">Request access</a>
+          <p class="micro">Founding beta. Manual invoicing and access. Coverage will expand as each source pipeline is verified.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell faq">
+      <div class="section-label">Important distinctions</div>
+      <details>
+        <summary>Does a building consent mean construction has started?</summary>
+        <p>No. CDI treats an issued building consent as a development/construction-intent signal. It does not by itself prove physical work has commenced.</p>
+      </details>
+      <details>
+        <summary>Are resource-consent applications and granted consents treated the same?</summary>
+        <p>No. Lodged, under consideration, granted, building-consent issued, construction and CCC/completed are separate stages. CDI separates observed facts from inferred status.</p>
+      </details>
+      <details>
+        <summary>What am I paying for?</summary>
+        <p>Collection, normalisation, classification, source tracking and a commercially useful view across fragmented council information — not resale of a council document as-is.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    <div class="brand">CDI<span>001</span></div>
+    <p>Council Development & Consent Intelligence · Canterbury founding beta</p>
+    <a href="mailto:moseslovesemail@gmail.com?subject=CDI%20Canterbury">Contact</a>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
