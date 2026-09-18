@@ -1,0 +1,12 @@
+{
+  "name": "cdi001-nz",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Council Development & Consent Intelligence — Canterbury founding beta",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
