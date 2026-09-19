@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="NZ Foam Project Radar — CDI design-partner demo for finding high-fit construction and development opportunities early.">
+  <title>NZ Foam Project Radar — CDI001</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/nz-foam/radar.css">
+</head>
+<body>
+  <header class="nav shell">
+    <a class="brand" href="/" aria-label="CDI home">CDI<span>001</span></a>
+    <nav>
+      <a href="#radar">Radar</a>
+      <a href="#scoring">Scoring</a>
+      <a href="#workflow">Workflow</a>
+      <a href="/">CDI home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="radar-hero shell">
+      <div>
+        <p class="eyebrow">CDI design-partner concept</p>
+        <h1>NZ Foam<br>Project Radar</h1>
+      </div>
+      <div class="hero-side">
+        <p>Turn development and consent signals into a prioritised national sales feed for NZ Foam.</p>
+        <div class="status-line"><span class="live-dot"></span> Demo interface · illustrative opportunities</div>
+      </div>
+    </section>
+
+    <section class="radar-strip">
+      <div class="shell radar-metrics">
+        <div><span>Projects detected</span><strong>1,284</strong><small>illustrative</small></div>
+        <div><span>High-fit opportunities</span><strong>186</strong><small>illustrative</small></div>
+        <div><span>Estimated pipeline</span><strong>$312m</strong><small>illustrative</small></div>
+        <div><span>New this month</span><strong>43</strong><small>illustrative</small></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="radar">
+      <div class="radar-title-row">
+        <div>
+          <div class="section-label">Opportunity feed</div>
+          <h2>Projects ranked for NZ Foam fit.</h2>
+        </div>
+        <div class="radar-note">Demo records below are illustrative and are not current customer leads.</div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filters" aria-label="NZ Foam opportunity filters">
+          <button class="radar-filter active" data-filter="all">All</button>
+          <button class="radar-filter" data-filter="agriculture">Agriculture</button>
+          <button class="radar-filter" data-filter="commercial">Commercial</button>
+          <button class="radar-filter" data-filter="residential">Residential</button>
+          <button class="radar-filter" data-filter="roofing">WarmCore</button>
+          <button class="radar-filter" data-filter="civil">Civil</button>
+          <button class="radar-filter" data-filter="containers">Containers</button>
+        </div>
+        <label class="search">
+          <span>Search</span>
+          <input id="projectSearch" type="search" placeholder="region, project, product…">
+        </label>
+      </div>
+
+      <div class="opportunity-list" id="opportunityList">
+        <article class="opportunity" data-category="agriculture" data-search="selwyn agricultural storage shed steel frame closed cell warmcore canterbury">
+          <div class="score score-high"><span>91</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority high">High priority</span><span>Selwyn District · Canterbury</span></div>
+            <h3>1,400m² agricultural storage building</h3>
+            <p>New steel-frame agricultural building · Building consent issued · Est. project value $1.8m</p>
+            <div class="chips">
+              <span>Closed-cell spray foam</span><span>WarmCore</span><span>Agriculture</span><span>New build</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Contact builder / architect / project manager</strong></div>
+        </article>
+
+        <article class="opportunity" data-category="commercial" data-search="christchurch warehouse logistics steel commercial roof spray foam warmcore">
+          <div class="score score-high"><span>88</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority high">High priority</span><span>Christchurch · Canterbury</span></div>
+            <h3>New logistics warehouse and office</h3>
+            <p>Large commercial shell · Building consent issued · Est. project value $6.2m</p>
+            <div class="chips">
+              <span>WarmCore</span><span>Closed-cell spray foam</span><span>Commercial</span><span>Roofing</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Request plans and identify roofing specification</strong></div>
+        </article>
+
+        <article class="opportunity" data-category="roofing" data-search="queenstown accommodation lodge roof warmcore commercial specialty">
+          <div class="score score-high"><span>86</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority high">High priority</span><span>Queenstown Lakes · Otago</span></div>
+            <h3>New alpine accommodation lodge</h3>
+            <p>Cold-climate accommodation project · Resource consent granted · Est. project value $9.4m</p>
+            <div class="chips">
+              <span>WarmCore</span><span>Closed-cell spray foam</span><span>Accommodation</span><span>Cold climate</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Track building-consent stage and approach design team</strong></div>
+        </article>
+
+        <article class="opportunity" data-category="residential" data-search="auckland high end residential skillion roof spray foam house plans">
+          <div class="score score-medium"><span>78</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority medium">Medium-high</span><span>Auckland</span></div>
+            <h3>Architectural residential new build</h3>
+            <p>Skillion roof + high-performance envelope · Building consent lodged · Est. project value $2.7m</p>
+            <div class="chips">
+              <span>Residential spray foam</span><span>Skillion roof</span><span>New build</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Contact architect while insulation detail is open</strong></div>
+        </article>
+
+        <article class="opportunity" data-category="civil" data-search="waikato civil retaining wall infrastructure rapidfill lightweight fill trench">
+          <div class="score score-medium"><span>74</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority medium">Medium-high</span><span>Waikato</span></div>
+            <h3>Civil retaining and ground-stabilisation works</h3>
+            <p>Infrastructure enabling works · Resource consent granted · Procurement stage inferred</p>
+            <div class="chips">
+              <span>Rapidfill</span><span>Civil</span><span>Lightweight fill</span><span>Retaining</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Identify civil contractor and engineer</strong></div>
+        </article>
+
+        <article class="opportunity" data-category="containers" data-search="tauranga container accommodation modular shipping containers insulation">
+          <div class="score score-medium"><span>69</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority medium">Medium</span><span>Tauranga · Bay of Plenty</span></div>
+            <h3>Container-based worker accommodation</h3>
+            <p>Modular accommodation project · Building consent lodged · 18 container units</p>
+            <div class="chips">
+              <span>Container insulation</span><span>Closed-cell spray foam</span><span>Moisture control</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Approach modular fabricator before fit-out</strong></div>
+        </article>
+
+        <article class="opportunity" data-category="commercial" data-search="nelson coolstore food processing commercial thermal storage spray foam">
+          <div class="score score-high"><span>84</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority high">High priority</span><span>Nelson Tasman</span></div>
+            <h3>Food-processing coolstore extension</h3>
+            <p>Thermal-controlled commercial extension · Building consent issued · Est. project value $3.1m</p>
+            <div class="chips">
+              <span>Closed-cell spray foam</span><span>Commercial</span><span>Thermal control</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Contact owner-side project manager / main contractor</strong></div>
+        </article>
+
+        <article class="opportunity" data-category="residential" data-search="wellington renovation retrofit walls underfloor spray foam residential">
+          <div class="score score-low"><span>57</span><small>/100</small></div>
+          <div class="opp-main">
+            <div class="opp-top"><span class="priority low">Monitor</span><span>Wellington</span></div>
+            <h3>Major residential alteration</h3>
+            <p>Internal reconfiguration and extension · Building consent issued · Retrofit suitability requires plan review</p>
+            <div class="chips">
+              <span>Residential</span><span>Renovation</span><span>Plan review required</span>
+            </div>
+          </div>
+          <div class="opp-action"><span>Recommended action</span><strong>Qualify wall access / underfloor clearance first</strong></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="scoring">
+      <div class="section-label">NZ Foam fit score</div>
+      <div class="split">
+        <h2>Not every consent is a lead. The scoring layer decides what deserves sales attention.</h2>
+        <div class="score-factors">
+          <div><span>30%</span><strong>Building / project type</strong><p>Warehouse, agricultural, commercial roof, coolstore, specialty, residential and civil fit.</p></div>
+          <div><span>20%</span><strong>Construction signals</strong><p>Steel frame, roof form, exposed cavities, thermal storage, modular/container or civil-fill indicators.</p></div>
+          <div><span>20%</span><strong>Project scale</strong><p>Estimated value, floor area, units and likely install volume.</p></div>
+          <div><span>15%</span><strong>Consent stage</strong><p>Earlier-stage projects may be more valuable when specifications can still change.</p></div>
+          <div><span>10%</span><strong>Geography / deployment</strong><p>Nationwide operation allows scoring against team location and route efficiency.</p></div>
+          <div><span>5%</span><strong>Data confidence</strong><p>Official source quality and completeness.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow section" id="workflow">
+      <div class="shell">
+        <div class="section-label light">Sales workflow</div>
+        <div class="workflow-line">
+          <div><span>01</span><strong>Consent appears</strong><p>CDI detects a new or changed development signal.</p></div>
+          <div><span>02</span><strong>Classify + score</strong><p>Project type, stage, scale and likely NZ Foam product fit.</p></div>
+          <div><span>03</span><strong>Assign lead</strong><p>Route to the right regional salesperson or technical specialist.</p></div>
+          <div><span>04</span><strong>Get plans</strong><p>Approach the builder, architect or project manager before insulation decisions are fixed.</p></div>
+          <div><span>05</span><strong>Quote + track</strong><p>Quote from plans and record outcome to improve future scoring.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="section-label">Design-partner objective</div>
+      <div class="split">
+        <h2>Use NZ Foam to prove CDI can generate attributable revenue.</h2>
+        <div class="body-copy">
+          <p>The first useful measure is not database size. It is whether the radar identifies projects the sales team would otherwise have found later — or not at all.</p>
+          <p>For each opportunity, track: detected date, salesperson, contact date, plans received, quote value, outcome, lost reason and revenue won. That produces a direct CDI → pipeline → revenue case study.</p>
+          <a class="button primary" href="mailto:moseslovesemail@gmail.com?subject=NZ%20Foam%20Project%20Radar">Discuss design-partner pilot</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    <div class="brand">CDI<span>001</span> / NZ Foam Project Radar</div>
+    <p>Design-partner demo · illustrative opportunity data</p>
+    <a href="/">CDI home</a>
+  </footer>
+
+  <script src="/nz-foam/radar.js"></script>
+</body>
+</html>
