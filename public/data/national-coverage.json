@@ -1,0 +1,78 @@
+{
+  "product": "CDI New Zealand",
+  "updated": "2026-09-20",
+  "authorities": [
+    {
+      "name": "Auckland Council",
+      "region": "Auckland",
+      "building_status": "LIVE_API",
+      "resource_status": "PLANNED",
+      "method": "ArcGIS REST feature layer",
+      "cost": "Free",
+      "notes": "Select operative building consents over NZ$1m issued in past two years."
+    },
+    {
+      "name": "Christchurch City Council",
+      "region": "Canterbury",
+      "building_status": "READY_PAID",
+      "resource_status": "PLANNED",
+      "method": "Monthly electronic list",
+      "cost": "NZ$16/list",
+      "notes": "Detailed issued building-consent list."
+    },
+    {
+      "name": "Selwyn District Council",
+      "region": "Canterbury",
+      "building_status": "READY_SUBSCRIPTION",
+      "resource_status": "LIVE_PUBLIC",
+      "method": "Subscriber feed + resource-consent dashboard",
+      "cost": "Mixed",
+      "notes": "Supporting documents progressively published for new resource-consent applications."
+    },
+    {
+      "name": "Waimakariri District Council",
+      "region": "Canterbury",
+      "building_status": "LIVE_PUBLIC",
+      "resource_status": "PLANNED",
+      "method": "eTrack + monthly register",
+      "cost": "Free/low",
+      "notes": "Live public search plus monthly register."
+    },
+    {
+      "name": "Tauranga City Council",
+      "region": "Bay of Plenty",
+      "building_status": "READY_PDF",
+      "resource_status": "READY_PDF",
+      "method": "Monthly PDF reports",
+      "cost": "Free",
+      "notes": "Building and resource consent reports updated monthly."
+    },
+    {
+      "name": "Queenstown Lakes District Council",
+      "region": "Otago",
+      "building_status": "READY_PDF",
+      "resource_status": "READY_PDF",
+      "method": "Monthly PDF reports + eDocs",
+      "cost": "Free",
+      "notes": "Recent building and resource consent summaries plus searchable eDocs."
+    },
+    {
+      "name": "Dunedin City Council",
+      "region": "Otago",
+      "building_status": "READY_DASHBOARD",
+      "resource_status": "PLANNED",
+      "method": "Downloadable dashboard / electronic list",
+      "cost": "Free/paid",
+      "notes": "Building-consent dashboard plus paid electronic list option."
+    }
+  ],
+  "status_legend": {
+    "LIVE_API": "Automatically queryable live source",
+    "LIVE_PUBLIC": "Public source already represented in CDI",
+    "READY_PDF": "Recurring public reports identified; parser next",
+    "READY_DASHBOARD": "Downloadable/searchable source identified; adapter next",
+    "READY_PAID": "Low-cost recurring electronic feed identified",
+    "READY_SUBSCRIPTION": "Recurring feed identified; subscription setup required",
+    "PLANNED": "Source still to be onboarded"
+  }
+}
