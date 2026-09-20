@@ -1,4 +1,5 @@
 const http = require("http");
+const https = require("https");
 const fs = require("fs");
 const path = require("path");
 
@@ -16,10 +17,89 @@ const types = {
   ".ico": "image/x-icon"
 };
 
-const server = http.createServer((req, res) => {
+function sendJson(res, status, payload, extraHeaders = {}) {
+  res.writeHead(status, {
+    "content-type": "application/json; charset=utf-8",
+    "cache-control": "public, max-age=300",
+    ...extraHeaders
+  });
+  res.end(JSON.stringify(payload));
+}
+
+function fetchJson(url) {
+  return new Promise((resolve, reject) => {
+    https.get(url, { headers: { "user-agent": "CDI001/0.2 (+public development intelligence)" } }, (upstream) => {
+      let body = "";
+      upstream.setEncoding("utf8");
+      upstream.on("data", (chunk) => body += chunk);
+      upstream.on("end", () => {
+        if (upstream.statusCode < 200 || upstream.statusCode >= 300) {
+          return reject(new Error(`Upstream status ${upstream.statusCode}`));
+        }
+        try { resolve(JSON.parse(body)); }
+        catch (err) { reject(err); }
+      });
+    }).on("error", reject);
+  });
+}
+
+function nzFoamScore(description = "", subtype = "", value = 0) {
+  const text = `${description} ${subtype}`.toLowerCase();
+  let score = 35;
+  const high = ["warehouse","industrial","coolstore","storage","factory","workshop","commercial","agricultural","farm","shed","roof"];
+  const medium = ["dwelling","residential","apartment","townhouse","accommodation","school","health","office"];
+  const low = ["demolition","swimming pool","retaining wall","sign","minor alteration"];
+  high.forEach(k => { if (text.includes(k)) score += 10; });
+  medium.forEach(k => { if (text.includes(k)) score += 5; });
+  low.forEach(k => { if (text.includes(k)) score -= 8; });
+  if (value >= 10000000) score += 12;
+  else if (value >= 5000000) score += 9;
+  else if (value >= 2000000) score += 5;
+  return Math.max(5, Math.min(95, score));
+}
+
+const server = http.createServer(async (req, res) => {
   if (req.url === "/health") {
-    res.writeHead(200, {"content-type":"application/json; charset=utf-8"});
-    return res.end(JSON.stringify({ok:true, service:"cdi001-nz"}));
+    return sendJson(res, 200, {ok:true, service:"cdi001-nz", scope:"new-zealand"});
+  }
+
+  if ((req.url || "").startsWith("/api/auckland/high-value")) {
+    try {
+      const endpoint = "https://mapspublic.aucklandcouncil.govt.nz/arcgis3/rest/services/NonCouncil/LINZBuildingConsent/MapServer/0/query";
+      const params = new URLSearchParams({
+        where: "1=1",
+        outFields: "ConsentReference,ConsentDescription,ConsentStatus,ProjectValue,IssuedDate,ApplicationSubType",
+        returnGeometry: "false",
+        orderByFields: "IssuedDate DESC",
+        resultRecordCount: "25",
+        f: "json"
+      });
+      const data = await fetchJson(`${endpoint}?${params.toString()}`);
+      if (data.error) throw new Error(data.error.message || "ArcGIS query failed");
+      const records = (data.features || []).map((f) => {
+        const a = f.attributes || {};
+        return {
+          council: "Auckland Council",
+          consent_reference: a.ConsentReference || null,
+          description: a.ConsentDescription || null,
+          status: a.ConsentStatus || null,
+          project_value_nzd: a.ProjectValue || null,
+          issued_date: a.IssuedDate ? new Date(a.IssuedDate).toISOString().slice(0,10) : null,
+          application_subtype: a.ApplicationSubType || null,
+          source_confidence: "HIGH",
+          nz_foam_preliminary_fit_score: nzFoamScore(a.ConsentDescription, a.ApplicationSubType, a.ProjectValue),
+          source_url: "https://mapspublic.aucklandcouncil.govt.nz/arcgis3/rest/services/NonCouncil/LINZBuildingConsent/MapServer/0"
+        };
+      });
+      return sendJson(res, 200, {
+        dataset: "Auckland Council select operative high-value building consents",
+        coverage_note: "Issued in the past two years with project value above NZ$1m, per Auckland Council layer description.",
+        fetched_at: new Date().toISOString(),
+        records
+      });
+    } catch (err) {
+      return sendJson(res, 502, {error:"Auckland source temporarily unavailable", detail: err.message});
+    }
   }
 
   const clean = decodeURIComponent((req.url || "/").split("?")[0]);
