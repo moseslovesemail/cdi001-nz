@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CDI New Zealand national council development and consent intelligence coverage.">
+<title>CDI New Zealand — National Coverage</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/national/national.css">
+</head>
+<body>
+<header class="nav shell">
+  <a class="brand" href="/">CDI<span>001</span></a>
+  <nav><a href="#auckland">Auckland live</a><a href="#coverage">Coverage</a><a href="/nz-foam/">NZ Foam Radar</a></nav>
+</header>
+<main>
+<section class="hero shell national-hero">
+  <p class="eyebrow">New Zealand development intelligence</p>
+  <h1>One national view of fragmented council development signals.</h1>
+  <p class="lede">CDI is moving from a Canterbury proof-of-ingestion to a New Zealand platform. Coverage is added council by council, with source status shown openly rather than implying completeness.</p>
+  <div class="actions"><a class="button primary" href="#auckland">View live Auckland feed</a><a class="button" href="#coverage">View coverage registry</a></div>
+</section>
+
+<section class="statement">
+<div class="shell metrics">
+  <div><strong>67</strong><span>territorial authorities in the national building-consent landscape</span></div>
+  <div><strong>7</strong><span>high-priority council sources already identified for Wave 1</span></div>
+  <div><strong>1</strong><span>canonical national CDI schema</span></div>
+</div>
+</section>
+
+<section class="section shell" id="auckland">
+  <div class="section-label">Live national adapter #1</div>
+  <div class="feed-head">
+    <div>
+      <h2>Auckland $1m+ building consents</h2>
+      <p>Auckland Council publishes a machine-readable feature layer covering selected operative building consents issued in the past two years with project values above NZ$1 million. CDI queries it live and adds a preliminary NZ Foam fit score.</p>
+    </div>
+    <div class="live-state" id="liveState">Loading live council data…</div>
+  </div>
+  <div class="national-records" id="aucklandRecords"></div>
+  <div class="notice"><strong>Data boundary:</strong> this is a high-value subset, not all Auckland building consents. Fit scores are CDI inferences from council descriptions and values, not confirmation that any product is specified.</div>
+</section>
+
+<section class="section shell" id="coverage">
+  <div class="section-label">Wave 1 national coverage registry</div>
+  <h2>Scale the adapters, not the manual work.</h2>
+  <div class="coverage-table" id="coverageTable"></div>
+</section>
+
+<section class="section shell">
+  <div class="section-label">National rollout</div>
+  <div class="method-grid">
+    <div class="method"><span>01</span><h3>API first</h3><p>Machine-readable council sources become automated adapters immediately.</p></div>
+    <div class="method"><span>02</span><h3>Recurring files</h3><p>PDF, CSV, XLSX and subscription registers enter a standard ingestion pipeline.</p></div>
+    <div class="method"><span>03</span><h3>Normalise once</h3><p>Every source maps into the same project, consent, stage, geography and provenance model.</p></div>
+    <div class="method"><span>04</span><h3>Customer lenses</h3><p>The national engine powers NZ Foam, project managers, contractors and trade-specific feeds.</p></div>
+  </div>
+</section>
+</main>
+<footer class="shell footer"><div class="brand">CDI<span>001</span> New Zealand</div><p>National coverage expanding council by council</p><a href="/">CDI home</a></footer>
+<script src="/national/national.js"></script>
+</body>
+</html>
