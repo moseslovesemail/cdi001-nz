@@ -1,0 +1,102 @@
+{
+  "dataset": "CDI001 NZ Foam Project Radar — Live Verified Signals",
+  "version": "2026-09-20",
+  "verified_at": "2026-09-20",
+  "methodology_note": "Council records are development/consent signals. NZ Foam fit scores are preliminary inferences from published descriptions only, not evidence that NZ Foam products are specified or that construction has commenced.",
+  "records": [
+    {
+      "id": "selwyn-rc265264",
+      "council": "Selwyn District Council",
+      "external_reference": "RC265264",
+      "consent_family": "RESOURCE",
+      "location": "Lot 76 DP 619966, Selwyn District",
+      "development_category": "Residential",
+      "observed_description": "Variation of consent notice in relation to having more than one residential unit on site.",
+      "observed_stage": "Limited notified",
+      "limited_notified_date": "2026-07-27",
+      "published_submission_close": "2026-08-24",
+      "source_confidence": "HIGH",
+      "nz_foam_preliminary_fit_score": 70,
+      "fit_is_inferred": true,
+      "likely_product_fit": [
+        "Residential spray foam — requires plan review"
+      ],
+      "recommended_action": "Monitor decision and building-consent stage; review plans before assigning a product fit.",
+      "source_url": "https://www.selwyn.govt.nz/property-And-building/resource-consent/notified-and-public-information/limited-notified-resource-consents/rc265264-generation-homes-christchurch-south-ltd"
+    },
+    {
+      "id": "selwyn-rc265265",
+      "council": "Selwyn District Council",
+      "external_reference": "RC265265",
+      "consent_family": "RESOURCE",
+      "location": "74 Pacific Drive, Rakaia Huts",
+      "development_category": "Residential / accessory building",
+      "observed_description": "Earthworks for construction of a garage within a SASM.",
+      "observed_stage": "Limited notified; submissions closed",
+      "limited_notified_date": "2026-05-18",
+      "submissions_closed_date": "2026-06-10",
+      "source_confidence": "HIGH",
+      "nz_foam_preliminary_fit_score": 54,
+      "fit_is_inferred": true,
+      "likely_product_fit": [
+        "Garage insulation — requires plan review"
+      ],
+      "recommended_action": "Monitor for building consent; qualify size, roof form and intended use before sales contact.",
+      "source_url": "https://www.selwyn.govt.nz/property-And-building/resource-consent/notified-and-public-information/limited-notified-resource-consents/rc265265-c-and-d-coughlan"
+    },
+    {
+      "id": "selwyn-rc265143",
+      "council": "Selwyn District Council",
+      "external_reference": "RC265143",
+      "consent_family": "RESOURCE",
+      "location": "Selwyn District — General Rural Zone",
+      "development_category": "Hospitality / accommodation",
+      "observed_description": "Retrospective land-use application for a wedding venue and visitor accommodation.",
+      "observed_stage": "Hearing stage in published record",
+      "limited_notified_date": "2026-07-01",
+      "hearing_date": "2026-09-01",
+      "source_confidence": "HIGH",
+      "nz_foam_preliminary_fit_score": 20,
+      "fit_is_inferred": true,
+      "likely_product_fit": [],
+      "recommended_action": "Exclude from active sales queue unless a separate building project is detected.",
+      "source_url": "https://www.selwyn.govt.nz/property-And-building/resource-consent/notified-and-public-information/limited-notified-resource-consents/rc265143-waipuna-investments-2020-limited"
+    },
+    {
+      "id": "waimakariri-raddens-2026-08",
+      "council": "Waimakariri District Council",
+      "external_reference": null,
+      "consent_family": "BUILDING",
+      "location": "36 Raddens Road, Ohoka",
+      "development_category": "Roofing / alteration",
+      "observed_description": "Amendment: entry canopy extended; internal gutter added.",
+      "observed_stage": "Determined in August 2026 results",
+      "lodged_date": "2026-07-28",
+      "source_confidence": "HIGH",
+      "nz_foam_preliminary_fit_score": 34,
+      "fit_is_inferred": true,
+      "likely_product_fit": [
+        "WarmCore / roofing — suitability unknown until plans reviewed"
+      ],
+      "recommended_action": "Keep as a low-priority roof signal until plans reveal assembly and insulation scope.",
+      "source_url": "https://eservices.waimakariri.govt.nz/ePropertyPROD/%28S%28dgvqlh55nw5djnn2a2toylj5%29%29/P1/eTrack/eTrackApplicationSearchResults.aspx?Field=D&Period=LM&f=%24P1.ETR.SEARCH.DLM&r=P1.WMKWEBGUEST"
+    },
+    {
+      "id": "waimakariri-waikuku-2026-09-08",
+      "council": "Waimakariri District Council",
+      "external_reference": null,
+      "consent_family": "BUILDING",
+      "location": "123 Waikuku Beach Road, Waikuku",
+      "development_category": "Amendment",
+      "observed_description": "Amendment: modification of durability periods to clause B2.3.1.",
+      "observed_stage": "Lodged",
+      "lodged_date": "2026-09-08",
+      "source_confidence": "HIGH",
+      "nz_foam_preliminary_fit_score": 10,
+      "fit_is_inferred": true,
+      "likely_product_fit": [],
+      "recommended_action": "Filter out of the active sales queue.",
+      "source_url": "https://eservices.waimakariri.govt.nz/ePropertyPROD/%28S%28dgvqlh55nw5djnn2a2toylj5%29%29/P1/eTrack/eTrackApplicationSearchResults.aspx?Field=S&Period=TM&f=%24P1.ETR.SEARCH.STM&r=P1.WMKWEBGUEST"
+    }
+  ]
+}
