@@ -120,13 +120,9 @@ async function loadProject(){
   const loading=document.querySelector("#projectLoading"),app=document.querySelector("#projectApp"),error=document.querySelector("#projectError");
   try{
     if(!projectKey)throw new Error("No project key was supplied.");
-    const [can,akl,tga,enrich]=await Promise.all([
-      getJson("/api/canterbury/verified"),getJson("/api/auckland/high-value"),getJson("/api/tauranga/major"),getJson("/data/project-enrichment.json")
-    ]);
-    const all=[...(akl.records||[]),...(tga.records||[]),...(can.records||[])];
-    const record=all.find(x=>recordKey(x)===projectKey);
-    if(!record)throw new Error("This project could not be found in the current live feed.");
-    const enrichment=enrich.projects?.[projectKey]||null;
+    const projectData=await getJson("/api/nz-foam/project?key="+encodeURIComponent(projectKey));
+    const record=projectData.record;
+    const enrichment=projectData.enrichment||null;
     const entities=enrichment?.entities||[];
     const best=entities.find(x=>x.recommended)||entities[0]||null;
 
