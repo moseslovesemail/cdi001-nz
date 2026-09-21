@@ -56,13 +56,16 @@ function nzFoamAnalysis(description = "", subtype = "", value = 0) {
   const has = (...terms) => terms.some((term) => text.includes(term));
   const newBuild = has("new ", "construction", "construct", "proposed", "erect");
   const residential = has("dwelling", "residential", "townhouse", "apartment", "household unit", "house ");
-  const multiResidential = residential && (has("dwellings", "units", "townhouses", "apartments") || /\b[2-9]\s*x\s*new/.test(text));
+  const multiResidential = residential && (
+    /\b(?:[2-9]|[1-9][0-9])\s*x\s*/.test(text) ||
+    has("multi-unit", "units 1", "townhouses", "apartments", "two dwellings", "three dwellings", "four dwellings", "five dwellings", "six dwellings", "seven dwellings", "eight dwellings", "nine dwellings", "ten dwellings", "eleven dwellings", "twelve dwellings")
+  );
   const industrial = has("warehouse", "industrial", "factory", "workshop", "coolstore", "cold store", "processing building", "storage building");
   const agriculture = has("agricultural", "farm ", "farm building", "rural shed", "implement shed", "milking", "horticulture");
-  const commercial = has("commercial", "office", "retail", "shop", "school", "teaching", "health", "hospital", "accommodation", "hotel", "stadium");
+  const commercial = !residential && has("commercial", "office building", "office-warehouse", "retail", "shop", "school", "teaching", "health", "hospital", "accommodation", "hotel", "stadium", "conference centre");
   const roof = has("roof", "roofing", "skillion", "traydeck", "hi-bond");
   const container = has("container", "modular");
-  const civil = has("retaining", "trench", "earthworks", "lightweight fill", "void fill", "backfill", "wastewater", "stormwater", "pool");
+  const civil = !residential && has("civil works", "retaining wall", "trench", "earthworks", "lightweight fill", "void fill", "backfill", "in-ground pool", "in ground pool");
   const thermal = has("thermal", "refrigerated", "coolstore", "cold store", "temperature controlled");
   const marine = has("marine", "boat", "vessel", "ship");
   const steel = has("steel", "metal");
@@ -71,13 +74,13 @@ function nzFoamAnalysis(description = "", subtype = "", value = 0) {
   const platformOnly = has("steel platform", "support platform") && !has("building", "warehouse", "shed");
 
   if (industrial) {
-    score += 30;
+    score += 40;
     uniquePush(products, "Commercial closed-cell spray foam");
     uniquePush(products, "WarmCore / roof-envelope review");
     reasons.push("industrial / warehouse-type project");
   }
   if (agriculture) {
-    score += 32;
+    score += 40;
     uniquePush(products, "Agricultural closed-cell spray foam");
     uniquePush(products, "WarmCore / roof-envelope review");
     reasons.push("agricultural project");
@@ -89,8 +92,12 @@ function nzFoamAnalysis(description = "", subtype = "", value = 0) {
     reasons.push("residential new-build potential");
   }
   if (multiResidential) {
-    score += 9;
+    score += 10;
     reasons.push("multiple dwellings / units");
+    if (/\b(?:1[0-9]|[2-9][0-9])\s*x\s*/.test(text) || has("ten dwellings", "eleven dwellings", "twelve dwellings")) {
+      score += 5;
+      reasons.push("larger multi-unit scale");
+    }
   }
   if (commercial) {
     score += 14;
