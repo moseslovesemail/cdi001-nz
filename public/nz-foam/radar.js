@@ -37,23 +37,35 @@ async function loadAucklandFoam(){
   const root=document.querySelector("#aucklandFoamRecords");
   const state=document.querySelector("#aucklandFoamStatus");
   if(!root||!state) return;
+
   try{
     const response=await fetch("/api/auckland/high-value");
     const data=await response.json();
     if(!response.ok) throw new Error(data.detail||data.error||"Unable to load Auckland data");
-    state.textContent=`${data.records.length} latest records returned from council API`;
-    root.innerHTML=data.records.map(x=>{
+
+    const sorted=[...data.records].sort((a,b) =>
+      (b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score) ||
+      String(b.issued_date||"").localeCompare(String(a.issued_date||""))
+    );
+
+    state.textContent=`${data.unique_consents_returned || sorted.length} unique live consents · ranked by preliminary NZ Foam fit`;
+
+    root.innerHTML=sorted.map(x=>{
       const [label,priorityClass,scoreClass]=priorityForScore(x.nz_foam_preliminary_fit_score);
+      const products=(x.nz_foam_product_candidates||["Plan review required"]).map(p=>`<span>${foamEsc(p)}</span>`).join("");
+      const reasons=(x.nz_foam_score_reasons||[]).slice(0,3).map(r=>foamEsc(r)).join(" · ");
+
       return `<article class="opportunity">
         <div class="score ${scoreClass}"><span>${x.nz_foam_preliminary_fit_score}</span><small>/100</small></div>
         <div class="opp-main">
           <div class="opp-top"><span class="priority ${priorityClass}">${label}</span><span>Auckland Council · ${foamEsc(x.consent_reference||"reference unavailable")}</span></div>
           <h3>${foamEsc(x.description||x.application_subtype||"High-value building consent")}</h3>
-          <p>${foamMoney(x.project_value_nzd)} · Issued ${foamEsc(x.issued_date||"date unavailable")} · ${foamEsc(x.application_subtype||"type not published")}</p>
-          <div class="chips"><span>$1m+ council layer</span><span>Building consent</span><span>Plan review required</span></div>
+          <p>${foamMoney(x.project_value_nzd)} · Issued ${foamEsc(x.issued_date||"date unavailable")} · ${foamEsc(x.status||"status unavailable")}</p>
+          <div class="chips">${products}<span>Live council record</span></div>
+          ${reasons ? `<p class="score-reason"><strong>Score basis:</strong> ${reasons}</p>` : ""}
           <a class="source-link" href="${x.source_url}" target="_blank" rel="noreferrer">Open Auckland Council source ↗</a>
         </div>
-        <div class="opp-action"><span>Recommended action</span><strong>${x.nz_foam_preliminary_fit_score>=75?"Prioritise plan/specification research and identify builder, architect or project manager.":x.nz_foam_preliminary_fit_score>=55?"Review description and plans before assigning to sales.":"Monitor unless project detail reveals stronger insulation relevance."}</strong></div>
+        <div class="opp-action"><span>Recommended action</span><strong>${foamEsc(x.recommended_action||"Review plans and project team before sales contact.")}</strong></div>
       </article>`;
     }).join("");
   }catch(error){
