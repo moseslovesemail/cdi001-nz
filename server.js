@@ -60,13 +60,13 @@ function nzFoamAnalysis(description = "", subtype = "", value = 0) {
     /\b(?:[2-9]|[1-9][0-9])\s*x\s*/.test(text) ||
     has("multi-unit", "units 1", "townhouses", "apartments", "two dwellings", "three dwellings", "four dwellings", "five dwellings", "six dwellings", "seven dwellings", "eight dwellings", "nine dwellings", "ten dwellings", "eleven dwellings", "twelve dwellings")
   );
-  const industrial = has("warehouse", "industrial", "factory", "workshop", "coolstore", "cold store", "processing building", "storage building");
+  const industrial = has("warehouse", "industrial", "factory", "workshop", "coolstore", "coolroom", "coolrooms", "cold room", "coldroom", "freezer", "chiller", "processing building", "storage building");
   const agriculture = has("agricultural", "farm ", "farm building", "rural shed", "implement shed", "milking", "horticulture");
-  const commercial = !residential && has("commercial", "office building", "office-warehouse", "retail", "shop", "school", "teaching", "health", "hospital", "accommodation", "hotel", "stadium", "conference centre");
+  const commercial = !residential && has("commercial", "office building", "office-warehouse", "retail", "shop", "showroom", "supermarket", "school", "teaching", "health", "hospital", "fire station", "court", "accommodation", "hotel", "stadium", "conference centre");
   const roof = has("roof", "roofing", "skillion", "traydeck", "hi-bond");
   const container = has("container", "modular");
   const civil = !residential && has("civil works", "retaining wall", "trench", "earthworks", "lightweight fill", "void fill", "backfill", "in-ground pool", "in ground pool");
-  const thermal = has("thermal", "refrigerated", "coolstore", "cold store", "temperature controlled");
+  const thermal = has("thermal", "refrigerated", "coolstore", "coolroom", "coolrooms", "cold room", "coldroom", "freezer", "chiller", "temperature controlled");
   const marine = has("marine", "boat", "vessel", "ship");
   const steel = has("steel", "metal");
   const interiorOnly = has("interior refurbishment", "internal refurbishment", "internal alteration") && !roof;
