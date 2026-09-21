@@ -202,6 +202,42 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, {ok:true, service:"cdi001-nz", scope:"new-zealand", version:"0.3"});
   }
 
+  if ((req.url || "").startsWith("/api/tauranga/major")) {
+    try {
+      const raw = JSON.parse(fs.readFileSync(path.join(publicDir, "data", "tauranga-major-july-2026.json"), "utf8"));
+      const records = (raw.records || []).map((x) => {
+        const analysis = nzFoamAnalysis(x.description, "", x.project_value_nzd);
+        return {
+          council: "Tauranga City Council",
+          consent_reference: x.id,
+          address: x.address,
+          description: x.description,
+          status: "Issued",
+          project_value_nzd: x.project_value_nzd,
+          issued_period: raw.period,
+          source_confidence: "HIGH",
+          nz_foam_preliminary_fit_score: analysis.score,
+          nz_foam_fit_band: analysis.fit_band,
+          nz_foam_product_candidates: analysis.products,
+          nz_foam_score_reasons: analysis.reasons,
+          recommended_action: analysis.recommended_action,
+          fit_is_inferred: true,
+          source_url: raw.source_url
+        };
+      }).sort((a,b) => b.nz_foam_preliminary_fit_score - a.nz_foam_preliminary_fit_score || b.project_value_nzd - a.project_value_nzd);
+
+      return sendJson(res, 200, {
+        dataset: raw.dataset,
+        period: raw.period,
+        coverage_note: "Official Tauranga City Council monthly report; this endpoint contains the report's Major Consent Applications Issued Value over $1m table, not all Tauranga consents.",
+        scoring_note: "NZ Foam fit is a CDI inference from the council description and published project value.",
+        records
+      });
+    } catch (err) {
+      return sendJson(res, 500, {error:"Tauranga dataset unavailable", detail: err.message});
+    }
+  }
+
   if ((req.url || "").startsWith("/api/auckland/high-value")) {
     try {
       const endpoint = "https://mapspublic.aucklandcouncil.govt.nz/arcgis3/rest/services/NonCouncil/LINZBuildingConsent/MapServer/0/query";
