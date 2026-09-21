@@ -5,6 +5,7 @@ const path = require("path");
 
 const publicDir = path.join(__dirname, "public");
 const port = process.env.PORT || 3000;
+const AUCKLAND_CACHE_TTL_MS = 15 * 60 * 1000;
 
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -20,7 +21,7 @@ const types = {
 function sendJson(res, status, payload, extraHeaders = {}) {
   res.writeHead(status, {
     "content-type": "application/json; charset=utf-8",
-    "cache-control": "public, max-age=300",
+    "cache-control": "public, max-age=60, stale-while-revalidate=900",
     ...extraHeaders
   });
   res.end(JSON.stringify(payload));
@@ -28,7 +29,10 @@ function sendJson(res, status, payload, extraHeaders = {}) {
 
 function fetchJson(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, { headers: { "user-agent": "CDI001/0.3 (+public development intelligence)" } }, (upstream) => {
+    const request = https.get(url, {
+      headers: { "user-agent": "CDI001/0.4 (+public development intelligence)" },
+      timeout: 12000
+    }, (upstream) => {
       let body = "";
       upstream.setEncoding("utf8");
       upstream.on("data", (chunk) => body += chunk);
@@ -39,7 +43,9 @@ function fetchJson(url) {
         try { resolve(JSON.parse(body)); }
         catch (err) { reject(err); }
       });
-    }).on("error", reject);
+    });
+    request.on("timeout", () => request.destroy(new Error("Upstream timeout")));
+    request.on("error", reject);
   });
 }
 
@@ -175,13 +181,7 @@ function nzFoamAnalysis(description = "", subtype = "", value = 0) {
     recommended_action = "Qualify: review plans and project team before assigning to sales.";
   }
 
-  return {
-    score,
-    fit_band,
-    products,
-    reasons: reasons.slice(0, 5),
-    recommended_action
-  };
+  return { score, fit_band, products, reasons: reasons.slice(0, 5), recommended_action };
 }
 
 function dedupeByReference(features) {
@@ -197,134 +197,255 @@ function dedupeByReference(features) {
   return unique;
 }
 
+function recordKey(record) {
+  return `${record.council || "Council"}::${record.consent_reference || record.address || record.description}`;
+}
+
+function readCanterburyPayload() {
+  const raw = JSON.parse(fs.readFileSync(path.join(publicDir, "data", "live-opportunities.json"), "utf8"));
+  const records = (raw.records || []).map((x) => ({
+    council: x.council,
+    consent_reference: x.external_reference || x.id,
+    address: x.location || null,
+    description: x.observed_description,
+    status: x.observed_stage,
+    project_value_nzd: null,
+    issued_date: x.lodged_date || x.limited_notified_date || null,
+    issued_period: null,
+    consent_family: x.consent_family,
+    source_confidence: x.source_confidence || "HIGH",
+    nz_foam_preliminary_fit_score: x.nz_foam_preliminary_fit_score,
+    nz_foam_fit_band: x.nz_foam_preliminary_fit_score >= 75 ? "HIGH" : x.nz_foam_preliminary_fit_score >= 55 ? "QUALIFY" : "MONITOR",
+    nz_foam_product_candidates: x.likely_product_fit?.length ? x.likely_product_fit : ["Plan review required"],
+    nz_foam_score_reasons: [x.development_category, x.consent_family + " consent"].filter(Boolean),
+    recommended_action: x.recommended_action,
+    fit_is_inferred: true,
+    source_url: x.source_url
+  }));
+  return {
+    dataset: raw.dataset,
+    coverage_note: "Verified public Selwyn and Waimakariri signals used as Canterbury proof-of-ingestion; not complete Canterbury coverage.",
+    scoring_note: raw.methodology_note,
+    verified_at: raw.verified_at,
+    records
+  };
+}
+
+function readTaurangaPayload() {
+  const raw = JSON.parse(fs.readFileSync(path.join(publicDir, "data", "tauranga-major-july-2026.json"), "utf8"));
+  const records = (raw.records || []).map((x) => {
+    const analysis = nzFoamAnalysis(x.description, "", x.project_value_nzd);
+    return {
+      council: "Tauranga City Council",
+      consent_reference: x.id,
+      address: x.address,
+      description: x.description,
+      status: "Issued",
+      project_value_nzd: x.project_value_nzd,
+      issued_period: raw.period,
+      source_confidence: "HIGH",
+      nz_foam_preliminary_fit_score: analysis.score,
+      nz_foam_fit_band: analysis.fit_band,
+      nz_foam_product_candidates: analysis.products,
+      nz_foam_score_reasons: analysis.reasons,
+      recommended_action: analysis.recommended_action,
+      fit_is_inferred: true,
+      source_url: raw.source_url
+    };
+  }).sort((a,b) => b.nz_foam_preliminary_fit_score - a.nz_foam_preliminary_fit_score || b.project_value_nzd - a.project_value_nzd);
+
+  return {
+    dataset: raw.dataset,
+    period: raw.period,
+    coverage_note: "Official Tauranga City Council monthly report; this endpoint contains the report's Major Consent Applications Issued Value over $1m table, not all Tauranga consents.",
+    scoring_note: "NZ Foam fit is a CDI inference from the council description and published project value.",
+    records
+  };
+}
+
+async function fetchAucklandPayload() {
+  const endpoint = "https://mapspublic.aucklandcouncil.govt.nz/arcgis3/rest/services/NonCouncil/LINZBuildingConsent/MapServer/0/query";
+  const params = new URLSearchParams({
+    where: "1=1",
+    outFields: "ConsentReference,ConsentDescription,ConsentStatus,ProjectValue,IssuedDate,ApplicationSubType",
+    returnGeometry: "false",
+    returnDistinctValues: "true",
+    orderByFields: "IssuedDate DESC,ProjectValue DESC",
+    resultRecordCount: "100",
+    f: "json"
+  });
+  const data = await fetchJson(`${endpoint}?${params.toString()}`);
+  if (data.error) throw new Error(data.error.message || "ArcGIS query failed");
+
+  const uniqueFeatures = dedupeByReference(data.features);
+  const records = uniqueFeatures.slice(0, 75).map((f) => {
+    const a = f.attributes || {};
+    const analysis = nzFoamAnalysis(a.ConsentDescription, a.ApplicationSubType, a.ProjectValue);
+    return {
+      council: "Auckland Council",
+      consent_reference: a.ConsentReference || null,
+      description: a.ConsentDescription || null,
+      status: a.ConsentStatus || null,
+      project_value_nzd: a.ProjectValue || null,
+      issued_date: a.IssuedDate ? new Date(a.IssuedDate).toISOString().slice(0,10) : null,
+      application_subtype: a.ApplicationSubType || null,
+      source_confidence: "HIGH",
+      nz_foam_preliminary_fit_score: analysis.score,
+      nz_foam_fit_band: analysis.fit_band,
+      nz_foam_product_candidates: analysis.products,
+      nz_foam_score_reasons: analysis.reasons,
+      recommended_action: analysis.recommended_action,
+      fit_is_inferred: true,
+      source_url: "https://mapspublic.aucklandcouncil.govt.nz/arcgis3/rest/services/NonCouncil/LINZBuildingConsent/MapServer/0"
+    };
+  });
+
+  return {
+    dataset: "Auckland Council select operative high-value building consents",
+    coverage_note: "Issued in the past two years with project value above NZ$1m, per Auckland Council layer description.",
+    scoring_note: "NZ Foam fit is a CDI inference from published description, subtype and value. It is not confirmation of product specification or project suitability.",
+    fetched_at: new Date().toISOString(),
+    raw_features_received: (data.features || []).length,
+    unique_consents_returned: records.length,
+    records
+  };
+}
+
+const aucklandCache = {
+  payload: null,
+  refreshedAt: 0,
+  refreshing: null,
+  lastError: null
+};
+
+async function refreshAucklandCache() {
+  if (aucklandCache.refreshing) return aucklandCache.refreshing;
+  aucklandCache.refreshing = fetchAucklandPayload()
+    .then((payload) => {
+      aucklandCache.payload = payload;
+      aucklandCache.refreshedAt = Date.now();
+      aucklandCache.lastError = null;
+      return payload;
+    })
+    .catch((err) => {
+      aucklandCache.lastError = err.message;
+      throw err;
+    })
+    .finally(() => {
+      aucklandCache.refreshing = null;
+    });
+  return aucklandCache.refreshing;
+}
+
+async function getAucklandPayload() {
+  const age = Date.now() - aucklandCache.refreshedAt;
+  if (aucklandCache.payload && age < AUCKLAND_CACHE_TTL_MS) return aucklandCache.payload;
+
+  if (aucklandCache.payload) {
+    refreshAucklandCache().catch(() => {});
+    return aucklandCache.payload;
+  }
+
+  return refreshAucklandCache();
+}
+
+function readEnrichment() {
+  return JSON.parse(fs.readFileSync(path.join(publicDir, "data", "project-enrichment.json"), "utf8"));
+}
+
+async function getLivePayload() {
+  const [auckland, tauranga, canterbury] = await Promise.all([
+    getAucklandPayload(),
+    Promise.resolve(readTaurangaPayload()),
+    Promise.resolve(readCanterburyPayload())
+  ]);
+  const all = [...auckland.records, ...tauranga.records, ...canterbury.records];
+  return {
+    generated_at: new Date().toISOString(),
+    cache: {
+      auckland_refreshed_at: aucklandCache.refreshedAt ? new Date(aucklandCache.refreshedAt).toISOString() : null,
+      auckland_age_seconds: aucklandCache.refreshedAt ? Math.round((Date.now() - aucklandCache.refreshedAt) / 1000) : null
+    },
+    summary: {
+      total_records: all.length,
+      high_fit: all.filter(x => x.nz_foam_preliminary_fit_score >= 75).length,
+      qualify: all.filter(x => x.nz_foam_preliminary_fit_score >= 55 && x.nz_foam_preliminary_fit_score < 75).length,
+      published_value_high_and_qualify: all
+        .filter(x => x.nz_foam_preliminary_fit_score >= 55)
+        .reduce((sum, x) => sum + (Number(x.project_value_nzd) || 0), 0)
+    },
+    sources: { auckland, tauranga, canterbury }
+  };
+}
+
+async function getProjectPayload(key) {
+  let record = null;
+
+  if (key.startsWith("Auckland Council::")) {
+    const source = await getAucklandPayload();
+    record = source.records.find(x => recordKey(x) === key) || null;
+  } else if (key.startsWith("Tauranga City Council::")) {
+    const source = readTaurangaPayload();
+    record = source.records.find(x => recordKey(x) === key) || null;
+  } else {
+    const source = readCanterburyPayload();
+    record = source.records.find(x => recordKey(x) === key) || null;
+  }
+
+  if (!record) return null;
+
+  const enrichment = readEnrichment().projects?.[key] || null;
+  return { record, enrichment };
+}
+
 const server = http.createServer(async (req, res) => {
-  if (req.url === "/health") {
-    return sendJson(res, 200, {ok:true, service:"cdi001-nz", scope:"new-zealand", version:"0.3"});
+  const parsed = new URL(req.url || "/", "http://localhost");
+
+  if (parsed.pathname === "/health") {
+    return sendJson(res, 200, {
+      ok: true,
+      service: "cdi001-nz",
+      scope: "new-zealand",
+      version: "0.4",
+      auckland_cache_ready: Boolean(aucklandCache.payload),
+      auckland_cache_age_seconds: aucklandCache.refreshedAt ? Math.round((Date.now() - aucklandCache.refreshedAt) / 1000) : null,
+      auckland_cache_error: aucklandCache.lastError
+    }, {"cache-control":"no-store"});
   }
 
-  if ((req.url || "").startsWith("/api/canterbury/verified")) {
+  if (parsed.pathname === "/api/canterbury/verified") {
+    try { return sendJson(res, 200, readCanterburyPayload()); }
+    catch (err) { return sendJson(res, 500, {error:"Canterbury dataset unavailable", detail: err.message}); }
+  }
+
+  if (parsed.pathname === "/api/tauranga/major") {
+    try { return sendJson(res, 200, readTaurangaPayload()); }
+    catch (err) { return sendJson(res, 500, {error:"Tauranga dataset unavailable", detail: err.message}); }
+  }
+
+  if (parsed.pathname === "/api/auckland/high-value") {
+    try { return sendJson(res, 200, await getAucklandPayload()); }
+    catch (err) { return sendJson(res, 502, {error:"Auckland source temporarily unavailable", detail: err.message}); }
+  }
+
+  if (parsed.pathname === "/api/nz-foam/live") {
+    try { return sendJson(res, 200, await getLivePayload()); }
+    catch (err) { return sendJson(res, 502, {error:"Live NZ Foam feed temporarily unavailable", detail: err.message}); }
+  }
+
+  if (parsed.pathname === "/api/nz-foam/project") {
     try {
-      const raw = JSON.parse(fs.readFileSync(path.join(publicDir, "data", "live-opportunities.json"), "utf8"));
-      const records = (raw.records || []).map((x) => ({
-        council: x.council,
-        consent_reference: x.external_reference || x.id,
-        address: x.location || null,
-        description: x.observed_description,
-        status: x.observed_stage,
-        project_value_nzd: null,
-        issued_date: x.lodged_date || x.limited_notified_date || null,
-        issued_period: null,
-        consent_family: x.consent_family,
-        source_confidence: x.source_confidence || "HIGH",
-        nz_foam_preliminary_fit_score: x.nz_foam_preliminary_fit_score,
-        nz_foam_fit_band: x.nz_foam_preliminary_fit_score >= 75 ? "HIGH" : x.nz_foam_preliminary_fit_score >= 55 ? "QUALIFY" : "MONITOR",
-        nz_foam_product_candidates: x.likely_product_fit?.length ? x.likely_product_fit : ["Plan review required"],
-        nz_foam_score_reasons: [x.development_category, x.consent_family + " consent"].filter(Boolean),
-        recommended_action: x.recommended_action,
-        fit_is_inferred: true,
-        source_url: x.source_url
-      }));
-      return sendJson(res, 200, {
-        dataset: raw.dataset,
-        coverage_note: "Verified public Selwyn and Waimakariri signals used as Canterbury proof-of-ingestion; not complete Canterbury coverage.",
-        scoring_note: raw.methodology_note,
-        verified_at: raw.verified_at,
-        records
-      });
+      const key = parsed.searchParams.get("key") || "";
+      if (!key) return sendJson(res, 400, {error:"Project key required"});
+      const project = await getProjectPayload(key);
+      if (!project) return sendJson(res, 404, {error:"Project not found"});
+      return sendJson(res, 200, project);
     } catch (err) {
-      return sendJson(res, 500, {error:"Canterbury dataset unavailable", detail: err.message});
+      return sendJson(res, 500, {error:"Project lookup failed", detail: err.message});
     }
   }
 
-  if ((req.url || "").startsWith("/api/tauranga/major")) {
-    try {
-      const raw = JSON.parse(fs.readFileSync(path.join(publicDir, "data", "tauranga-major-july-2026.json"), "utf8"));
-      const records = (raw.records || []).map((x) => {
-        const analysis = nzFoamAnalysis(x.description, "", x.project_value_nzd);
-        return {
-          council: "Tauranga City Council",
-          consent_reference: x.id,
-          address: x.address,
-          description: x.description,
-          status: "Issued",
-          project_value_nzd: x.project_value_nzd,
-          issued_period: raw.period,
-          source_confidence: "HIGH",
-          nz_foam_preliminary_fit_score: analysis.score,
-          nz_foam_fit_band: analysis.fit_band,
-          nz_foam_product_candidates: analysis.products,
-          nz_foam_score_reasons: analysis.reasons,
-          recommended_action: analysis.recommended_action,
-          fit_is_inferred: true,
-          source_url: raw.source_url
-        };
-      }).sort((a,b) => b.nz_foam_preliminary_fit_score - a.nz_foam_preliminary_fit_score || b.project_value_nzd - a.project_value_nzd);
-
-      return sendJson(res, 200, {
-        dataset: raw.dataset,
-        period: raw.period,
-        coverage_note: "Official Tauranga City Council monthly report; this endpoint contains the report's Major Consent Applications Issued Value over $1m table, not all Tauranga consents.",
-        scoring_note: "NZ Foam fit is a CDI inference from the council description and published project value.",
-        records
-      });
-    } catch (err) {
-      return sendJson(res, 500, {error:"Tauranga dataset unavailable", detail: err.message});
-    }
-  }
-
-  if ((req.url || "").startsWith("/api/auckland/high-value")) {
-    try {
-      const endpoint = "https://mapspublic.aucklandcouncil.govt.nz/arcgis3/rest/services/NonCouncil/LINZBuildingConsent/MapServer/0/query";
-      const params = new URLSearchParams({
-        where: "1=1",
-        outFields: "ConsentReference,ConsentDescription,ConsentStatus,ProjectValue,IssuedDate,ApplicationSubType",
-        returnGeometry: "false",
-        returnDistinctValues: "true",
-        orderByFields: "IssuedDate DESC,ProjectValue DESC",
-        resultRecordCount: "100",
-        f: "json"
-      });
-      const data = await fetchJson(`${endpoint}?${params.toString()}`);
-      if (data.error) throw new Error(data.error.message || "ArcGIS query failed");
-
-      const uniqueFeatures = dedupeByReference(data.features);
-      const records = uniqueFeatures.slice(0, 75).map((f) => {
-        const a = f.attributes || {};
-        const analysis = nzFoamAnalysis(a.ConsentDescription, a.ApplicationSubType, a.ProjectValue);
-        return {
-          council: "Auckland Council",
-          consent_reference: a.ConsentReference || null,
-          description: a.ConsentDescription || null,
-          status: a.ConsentStatus || null,
-          project_value_nzd: a.ProjectValue || null,
-          issued_date: a.IssuedDate ? new Date(a.IssuedDate).toISOString().slice(0,10) : null,
-          application_subtype: a.ApplicationSubType || null,
-          source_confidence: "HIGH",
-          nz_foam_preliminary_fit_score: analysis.score,
-          nz_foam_fit_band: analysis.fit_band,
-          nz_foam_product_candidates: analysis.products,
-          nz_foam_score_reasons: analysis.reasons,
-          recommended_action: analysis.recommended_action,
-          fit_is_inferred: true,
-          source_url: "https://mapspublic.aucklandcouncil.govt.nz/arcgis3/rest/services/NonCouncil/LINZBuildingConsent/MapServer/0"
-        };
-      });
-
-      return sendJson(res, 200, {
-        dataset: "Auckland Council select operative high-value building consents",
-        coverage_note: "Issued in the past two years with project value above NZ$1m, per Auckland Council layer description.",
-        scoring_note: "NZ Foam fit is a CDI inference from published description, subtype and value. It is not confirmation of product specification or project suitability.",
-        fetched_at: new Date().toISOString(),
-        raw_features_received: (data.features || []).length,
-        unique_consents_returned: records.length,
-        records
-      });
-    } catch (err) {
-      return sendJson(res, 502, {error:"Auckland source temporarily unavailable", detail: err.message});
-    }
-  }
-
-  const clean = decodeURIComponent((req.url || "/").split("?")[0]);
+  const clean = decodeURIComponent(parsed.pathname);
   const relative = clean === "/" ? "index.html" : clean.replace(/^\/+/, "");
   const filePath = path.normalize(path.join(publicDir, relative));
 
@@ -353,4 +474,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(port, "0.0.0.0", () => {
   console.log(`CDI001 listening on port ${port}`);
+  refreshAucklandCache()
+    .then(() => console.log("Auckland consent cache pre-warmed"))
+    .catch((err) => console.warn("Auckland cache pre-warm failed:", err.message));
 });
