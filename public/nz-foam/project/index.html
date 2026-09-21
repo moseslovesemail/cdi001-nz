@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="description" content="NZ Foam Project Radar project detail and contact intelligence.">
+  <title>Project Detail — NZ Foam Project Radar</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/nz-foam/radar.css">
+  <link rel="stylesheet" href="/nz-foam/project/project.css">
+</head>
+<body>
+<header class="nav shell">
+  <a class="brand" href="/nz-foam/">CDI<span>001</span> / NZ Foam</a>
+  <nav><a href="/nz-foam/">Back to radar</a><a href="/nz-foam/jacob/">Jacob preview</a></nav>
+</header>
+
+<main class="shell project-shell">
+  <div id="projectLoading" class="project-loading">Loading verified project intelligence…</div>
+  <div id="projectApp" hidden>
+    <section class="project-hero">
+      <div class="project-score-wrap">
+        <div class="score score-high" id="projectScore"><span>—</span><small>/100</small></div>
+        <span class="project-fit-band" id="projectFitBand">—</span>
+      </div>
+      <div>
+        <p class="eyebrow" id="projectCouncil">Council project signal</p>
+        <h1 id="projectTitle">Project</h1>
+        <p class="lede" id="projectMeta"></p>
+        <div class="project-actions">
+          <a class="button" id="projectSource" target="_blank" rel="noreferrer">Council source ↗</a>
+          <button class="button" id="markContacted" type="button">Mark contacted</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-grid">
+      <article class="project-panel">
+        <div class="section-label">Why NZ Foam may care</div>
+        <div class="fit-products" id="fitProducts"></div>
+        <p class="project-copy" id="scoreReasons"></p>
+        <div class="recommended-box">
+          <span>Recommended sales action</span>
+          <strong id="recommendedAction"></strong>
+        </div>
+      </article>
+
+      <article class="project-panel">
+        <div class="section-label">Project / consent position</div>
+        <dl class="project-facts" id="projectFacts"></dl>
+        <p class="project-copy" id="stageNote"></p>
+      </article>
+    </section>
+
+    <section class="project-section" id="contactSection">
+      <div class="section-heading-row">
+        <div>
+          <div class="section-label">Project team & contacts</div>
+          <h2>Who to contact now.</h2>
+        </div>
+        <div class="contactability" id="contactability"></div>
+      </div>
+      <div class="recommended-contact" id="contactStrategy"></div>
+      <div class="contact-list" id="contactList"></div>
+      <div class="contact-empty" id="contactEmpty" hidden>
+        <h3>No verified project contact is loaded yet.</h3>
+        <p id="fallbackContactAdvice"></p>
+        <p>CDI will not invent a person. Until enrichment is verified, use the council source and target the recommended project role.</p>
+      </div>
+    </section>
+
+    <section class="project-section">
+      <div class="section-label">Outreach assistant</div>
+      <div class="outreach-grid">
+        <div>
+          <h2>Start the conversation with context.</h2>
+          <p class="project-copy">The draft below uses the project description and asks to be routed to the person responsible for insulation, roofing or envelope decisions. Edit it before sending.</p>
+        </div>
+        <div class="outreach-card">
+          <textarea id="outreachDraft" aria-label="Suggested outreach"></textarea>
+          <div class="outreach-actions">
+            <button class="button primary" id="copyOutreach" type="button">Copy message</button>
+            <a class="button" id="emailBestContact" hidden>Email best contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" id="linkedSection">
+      <div class="section-label">Linked project evidence</div>
+      <div id="linkedRecords" class="linked-list"></div>
+    </section>
+
+    <section class="project-section">
+      <div class="section-label">Pilot outcome</div>
+      <div class="project-review-grid">
+        <label>Sales review
+          <select id="detailStatus">
+            <option value="">Unreviewed</option>
+            <option value="relevant">Relevant</option>
+            <option value="watch">Watch</option>
+            <option value="rejected">Not relevant</option>
+          </select>
+        </label>
+        <label>Owner<input id="detailOwner" placeholder="Salesperson"></label>
+        <label>Contacted
+          <select id="detailContacted"><option value="false">No</option><option value="true">Yes</option></select>
+        </label>
+        <label>Plans received
+          <select id="detailPlans"><option value="false">No</option><option value="true">Yes</option></select>
+        </label>
+        <label>Quote value NZD<input id="detailQuote" type="number" min="0" step="100"></label>
+        <label>Outcome
+          <select id="detailOutcome">
+            <option value="open">Open</option><option value="won">Won</option>
+            <option value="lost">Lost</option><option value="no-fit">No fit</option>
+          </select>
+        </label>
+        <label>Revenue won NZD<input id="detailRevenue" type="number" min="0" step="100"></label>
+        <label class="detail-notes">Notes<textarea id="detailNotes"></textarea></label>
+      </div>
+      <p class="save-status" id="saveStatus">Changes save automatically in this browser.</p>
+    </section>
+  </div>
+
+  <div id="projectError" class="notice" hidden></div>
+</main>
+
+<script src="/nz-foam/project/project.js"></script>
+</body>
+</html>
