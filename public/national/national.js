@@ -13,7 +13,7 @@ async function loadAuckland(){
    <div><h3>${esc(x.description||x.application_subtype||"Building consent")}</h3><p>${esc(x.consent_reference||"No public reference")} · ${esc(x.application_subtype||"Subtype not published")}</p></div>
    <div class="meta"><span>Issued: ${esc(x.issued_date||"—")}</span><span>Status: ${esc(x.status||"—")}</span><a href="${x.source_url}" target="_blank" rel="noreferrer">Council source ↗</a></div>
   </article>`).join("");
- }catch(e){state.textContent="Live source temporarily unavailable";root.innerHTML=`<div class="notice">Auckland adapter error: ${esc(e.message)}. The CDI site remains available while the council source is retried.</div>`;}
+ }catch(e){state.textContent="Live source temporarily unavailable";root.innerHTML=`<div class="notice">Auckland adapter error: ${esc(e.message)}. The NZ Foam Radar remains available while the council source is retried.</div>`;}
 }
 
 function statusClass(s){return s.startsWith("LIVE")?"live":"ready"}

@@ -236,7 +236,7 @@ document.querySelectorAll(".live-filter").forEach(btn=>{
 const exportButton=document.querySelector("#exportPilotCsv");
 if(exportButton){
   exportButton.addEventListener("click",()=>{
-    const headers=["Council","Consent Reference","Address","Issued Date / Period","Description","Project Value NZD","CDI Fit Score","Fit Band","Product Candidates","Score Reasons","Recommended Action","Sales Review","Owner","Contacted","Plans Received","Quote Value NZD","Outcome","Revenue Won NZD","Notes","Source URL"];
+    const headers=["Council","Consent Reference","Address","Issued Date / Period","Description","Project Value NZD","NZ Foam Fit Score","Fit Band","Product Candidates","Score Reasons","Recommended Action","Sales Review","Owner","Contacted","Plans Received","Quote Value NZD","Outcome","Revenue Won NZD","Notes","Source URL"];
     const rows=allLiveRecords().map(x=>{
       const review=reviewFor(x);
       return [
@@ -251,7 +251,7 @@ if(exportButton){
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download="NZ-Foam-Project-Radar-Pilot.csv";
+    a.download="NZ-Foam-Project-Reviews.csv";
     document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
   });
 }
