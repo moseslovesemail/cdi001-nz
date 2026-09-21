@@ -13,7 +13,7 @@
     <a class="brand" href="/" aria-label="CDI home">CDI<span>001</span></a>
     <nav>
       <a href="#live-signals">Live signals</a>
-      <a href="#auckland-live">Auckland live</a>
+      <a href="#auckland-live">Auckland</a>\n      <a href="#tauranga-live">Tauranga</a>
       <a href="#radar">Scoring model</a>
       <a href="#scoring">Scoring</a>
       <a href="#workflow">Workflow</a>
@@ -35,7 +35,7 @@
 
     <section class="radar-strip">
       <div class="shell radar-metrics">
-        <div><span>Live Auckland consents</span><strong id="metricLiveCount">—</strong><small>unique $1m+ records</small></div>
+        <div><span>Live scored records</span><strong id="metricLiveCount">—</strong><small>Auckland + Tauranga</small></div>
         <div><span>High fit</span><strong id="metricHighCount">—</strong><small>75+ preliminary score</small></div>
         <div><span>Qualify</span><strong id="metricQualifyCount">—</strong><small>55–74 preliminary score</small></div>
         <div><span>High + qualify pipeline</span><strong id="metricPipeline">—</strong><small>published project values</small></div>
@@ -148,6 +148,18 @@
 
       <div class="opportunity-list" id="aucklandFoamRecords"></div>
       <div class="notice"><strong>Coverage boundary:</strong> Auckland Council's public layer is a selected high-value subset covering operative building consents above NZ$1m issued in the past two years. CDI does not present this as full Auckland coverage.</div>
+    </section>
+
+    <section class="section shell" id="tauranga-live">
+      <div class="radar-title-row">
+        <div>
+          <div class="section-label">Tauranga verified monthly report</div>
+          <h2>Major Tauranga consents over $1m.</h2>
+        </div>
+        <div class="radar-note" id="taurangaFoamStatus">Loading Tauranga City Council major-consent report…</div>
+      </div>
+      <div class="opportunity-list" id="taurangaFoamRecords"></div>
+      <div class="notice"><strong>Coverage boundary:</strong> this feed is the council's July 2026 “Major Consent Applications Issued Value over $1m” table. It is verified monthly-report data, not a live all-consents API. We will automate the monthly PDF ingestion after the pilot logic is validated.</div>
     </section>
 
     <section class="section shell" id="radar">
