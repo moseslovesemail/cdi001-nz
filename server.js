@@ -202,6 +202,40 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, {ok:true, service:"cdi001-nz", scope:"new-zealand", version:"0.3"});
   }
 
+  if ((req.url || "").startsWith("/api/canterbury/verified")) {
+    try {
+      const raw = JSON.parse(fs.readFileSync(path.join(publicDir, "data", "live-opportunities.json"), "utf8"));
+      const records = (raw.records || []).map((x) => ({
+        council: x.council,
+        consent_reference: x.external_reference || x.id,
+        address: x.location || null,
+        description: x.observed_description,
+        status: x.observed_stage,
+        project_value_nzd: null,
+        issued_date: x.lodged_date || x.limited_notified_date || null,
+        issued_period: null,
+        consent_family: x.consent_family,
+        source_confidence: x.source_confidence || "HIGH",
+        nz_foam_preliminary_fit_score: x.nz_foam_preliminary_fit_score,
+        nz_foam_fit_band: x.nz_foam_preliminary_fit_score >= 75 ? "HIGH" : x.nz_foam_preliminary_fit_score >= 55 ? "QUALIFY" : "MONITOR",
+        nz_foam_product_candidates: x.likely_product_fit?.length ? x.likely_product_fit : ["Plan review required"],
+        nz_foam_score_reasons: [x.development_category, x.consent_family + " consent"].filter(Boolean),
+        recommended_action: x.recommended_action,
+        fit_is_inferred: true,
+        source_url: x.source_url
+      }));
+      return sendJson(res, 200, {
+        dataset: raw.dataset,
+        coverage_note: "Verified public Selwyn and Waimakariri signals used as Canterbury proof-of-ingestion; not complete Canterbury coverage.",
+        scoring_note: raw.methodology_note,
+        verified_at: raw.verified_at,
+        records
+      });
+    } catch (err) {
+      return sendJson(res, 500, {error:"Canterbury dataset unavailable", detail: err.message});
+    }
+  }
+
   if ((req.url || "").startsWith("/api/tauranga/major")) {
     try {
       const raw = JSON.parse(fs.readFileSync(path.join(publicDir, "data", "tauranga-major-july-2026.json"), "utf8"));
