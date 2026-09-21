@@ -35,7 +35,11 @@ async function loadJacobProof(){
         <p class="score-reason"><strong>Why it scored:</strong> ${jacobEsc((x.nz_foam_score_reasons||[]).slice(0,4).join(" · "))}</p>
         <a class="source-link" href="${x.source_url}" target="_blank" rel="noreferrer">Open council source ↗</a>
       </div>
-      <div class="opp-action"><span>Recommended action</span><strong>${jacobEsc(x.recommended_action)}</strong></div>
+      <div class="opp-action">
+        <span>Recommended action</span>
+        <strong>${jacobEsc(x.recommended_action)}</strong>
+        <a class="button project-open-button" href="/nz-foam/project/?key=${encodeURIComponent((x.council||"Council")+"::"+(x.consent_reference||x.address||x.description))}">Open project →</a>
+      </div>
     </article>`).join("");
   }catch(error){
     state.textContent="Live source temporarily unavailable";
