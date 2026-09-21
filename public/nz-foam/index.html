@@ -29,16 +29,16 @@
       </div>
       <div class="hero-side">
         <p>Turn development and consent signals across New Zealand into a prioritised national sales feed for NZ Foam.</p>
-        <div class="status-line"><span class="live-dot"></span> Live council-source layer + illustrative scoring layer</div>
+        <div class="status-line"><span class="live-dot"></span> Pilot-ready live feed + browser review workflow</div>
       </div>
     </section>
 
     <section class="radar-strip">
       <div class="shell radar-metrics">
-        <div><span>Canterbury verified</span><strong>5</strong><small>public council records</small></div>
-        <div><span>Live regions</span><strong>2</strong><small>Canterbury + Auckland</small></div>
-        <div><span>Wave 1 sources</span><strong>7</strong><small>national registry</small></div>
-        <div><span>Scoring examples</span><strong>8</strong><small>illustrative model layer</small></div>
+        <div><span>Live Auckland consents</span><strong id="metricLiveCount">—</strong><small>unique $1m+ records</small></div>
+        <div><span>High fit</span><strong id="metricHighCount">—</strong><small>75+ preliminary score</small></div>
+        <div><span>Qualify</span><strong id="metricQualifyCount">—</strong><small>55–74 preliminary score</small></div>
+        <div><span>High + qualify pipeline</span><strong id="metricPipeline">—</strong><small>published project values</small></div>
       </div>
     </section>
 
@@ -124,6 +124,28 @@
         </div>
         <div class="radar-note" id="aucklandFoamStatus">Loading Auckland Council $1m+ consent layer…</div>
       </div>
+
+      <div class="pilot-panel">
+        <div class="pilot-stats">
+          <div><span>Reviewed</span><strong id="pilotReviewed">0</strong></div>
+          <div><span>Relevant</span><strong id="pilotRelevant">0</strong></div>
+          <div><span>Watch</span><strong id="pilotWatch">0</strong></div>
+          <div><span>Not relevant</span><strong id="pilotRejected">0</strong></div>
+        </div>
+        <div class="pilot-actions">
+          <div class="live-filters" aria-label="Live opportunity filters">
+            <button class="live-filter active" data-live-filter="all">All</button>
+            <button class="live-filter" data-live-filter="high">High fit</button>
+            <button class="live-filter" data-live-filter="qualify">Qualify</button>
+            <button class="live-filter" data-live-filter="monitor">Monitor</button>
+            <button class="live-filter" data-live-filter="unreviewed">Unreviewed</button>
+            <button class="live-filter" data-live-filter="reviewed">Reviewed</button>
+          </div>
+          <button class="button export-button" id="exportPilotCsv" type="button">Export pilot CSV</button>
+        </div>
+        <p class="pilot-storage-note">Pilot reviews are saved in this browser only. This keeps the prototype free while we test the workflow; a shared team database comes after NZ Foam validates the process.</p>
+      </div>
+
       <div class="opportunity-list" id="aucklandFoamRecords"></div>
       <div class="notice"><strong>Coverage boundary:</strong> Auckland Council's public layer is a selected high-value subset covering operative building consents above NZ$1m issued in the past two years. CDI does not present this as full Auckland coverage.</div>
     </section>
