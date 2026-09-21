@@ -13,17 +13,17 @@ async function loadJacobProof(){
   const root=document.querySelector("#jacobLiveRecords");
   if(!state||!root) return;
   try{
-    const results=await Promise.all([
-      getJson("/api/auckland/high-value"),
-      getJson("/api/tauranga/major"),
-      getJson("/api/canterbury/verified")
-    ]);
-    const all=results.flatMap(x=>x.records||[]);
+    const data=await getJson("/api/nz-foam/live");
+    const all=[
+      ...(data.sources?.auckland?.records||[]),
+      ...(data.sources?.tauranga?.records||[]),
+      ...(data.sources?.canterbury?.records||[])
+    ];
     const top=[...all]
       .sort((a,b)=>(b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score)||((b.project_value_nzd||0)-(a.project_value_nzd||0)))
       .slice(0,6);
-    const high=all.filter(x=>x.nz_foam_preliminary_fit_score>=75).length;
-    const qualify=all.filter(x=>x.nz_foam_preliminary_fit_score>=55&&x.nz_foam_preliminary_fit_score<75).length;
+    const high=data.summary?.high_fit ?? all.filter(x=>x.nz_foam_preliminary_fit_score>=75).length;
+    const qualify=data.summary?.qualify ?? all.filter(x=>x.nz_foam_preliminary_fit_score>=55&&x.nz_foam_preliminary_fit_score<75).length;
     state.textContent=`${all.length} verified records across 3 live source groups · ${high} high fit · ${qualify} qualify · showing top 6`;
     root.innerHTML=top.map(x=>`<article class="opportunity">
       <div class="score ${x.nz_foam_preliminary_fit_score>=75?"score-high":"score-medium"}"><span>${x.nz_foam_preliminary_fit_score}</span><small>/100</small></div>
