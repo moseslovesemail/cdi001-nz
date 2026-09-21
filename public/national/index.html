@@ -3,62 +3,147 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="CDI New Zealand national council development and consent intelligence coverage.">
-<title>CDI New Zealand — National Coverage</title>
-<link rel="stylesheet" href="/styles.css">
+<meta name="description" content="NZ Foam Project Radar — coverage and data sources.">
+<title>NZ Foam — Coverage & Sources</title>
+<link rel="stylesheet" href="/nz-foam/brand.css?v=20260922-brand1">
 <link rel="stylesheet" href="/national/national.css">
 </head>
 <body>
 <header class="nav shell">
-  <a class="brand" href="/">CDI<span>001</span></a>
-  <nav><a href="#auckland">Auckland live</a><a href="#coverage">Coverage</a><a href="/nz-foam/">NZ Foam Radar</a></nav>
+  <a class="brand" href="/" aria-label="NZ Foam home">
+    <img src="/nz-foam/assets/logo.png" alt="NZ Foam" class="logo" width="160" height="50">
+    <span class="wordmark">Project Radar</span>
+  </a>
+  <nav>
+    <a href="#auckland">Auckland</a>
+    <a href="#coverage">Coverage</a>
+    <a href="/nz-foam/">Open radar</a>
+  </nav>
 </header>
 <main>
 <section class="hero shell national-hero">
-  <p class="eyebrow">New Zealand development intelligence</p>
-  <h1>One national view of fragmented council development signals.</h1>
-  <p class="lede">CDI is moving from a Canterbury proof-of-ingestion to a New Zealand platform. Coverage is added council by council, with source status shown openly rather than implying completeness.</p>
-  <div class="actions"><a class="button primary" href="#auckland">View live Auckland feed</a><a class="button" href="#coverage">View coverage registry</a></div>
+  <p class="eyebrow">NZ Foam Project Radar</p>
+  <h1>Coverage and data sources.</h1>
+  <p class="lede">Project Radar draws from verified council sources — building consents, resource consents, and development signals — across New Zealand. Coverage is expanded region by region as each council source is integrated and validated.</p>
+  <div class="actions">
+    <a class="button primary" href="/nz-foam/">View project radar</a>
+    <a class="button" href="/nz-foam/jacob/">Team guide</a>
+  </div>
 </section>
 
 <section class="statement">
 <div class="shell metrics">
-  <div><strong>67</strong><span>territorial authorities in the national building-consent landscape</span></div>
-  <div><strong>7</strong><span>high-priority council sources already identified for Wave 1</span></div>
-  <div><strong>1</strong><span>canonical national CDI schema</span></div>
+  <div><strong>3</strong><span>council sources currently active</span></div>
+  <div><strong>67</strong><span>territorial authorities in New Zealand</span></div>
+  <div><strong>Real</strong><span>verified public data, no synthetic records</span></div>
 </div>
 </section>
 
 <section class="section shell" id="auckland">
-  <div class="section-label">Live national adapter #1</div>
+  <div class="section-label">Auckland Council (Live API)</div>
   <div class="feed-head">
     <div>
-      <h2>Auckland $1m+ building consents</h2>
-      <p>Auckland Council publishes a machine-readable feature layer covering selected operative building consents issued in the past two years with project values above NZ$1 million. CDI queries it live and adds a preliminary NZ Foam fit score.</p>
+      <h2>Building consents over $1 million</h2>
+      <p>Auckland Council publishes operative building consents (issued in the past two years) with project values above NZ$1 million. Project Radar queries this live, identifies spray foam fit, and ranks opportunities.</p>
     </div>
-    <div class="live-state" id="liveState">Loading live council data…</div>
+    <div class="live-state" id="liveState">Loading Auckland Council data…</div>
   </div>
   <div class="national-records" id="aucklandRecords"></div>
-  <div class="notice"><strong>Data boundary:</strong> this is a high-value subset, not all Auckland building consents. Fit scores are CDI inferences from council descriptions and values, not confirmation that any product is specified.</div>
+  <div class="notice"><strong>What this covers:</strong> selected high-value building consents, not complete Auckland coverage. Fit scores are estimates based on project description and value, not confirmation that spray foam is specified.</div>
 </section>
 
 <section class="section shell" id="coverage">
-  <div class="section-label">Wave 1 national coverage registry</div>
-  <h2>Scale the adapters, not the manual work.</h2>
+  <div class="section-label">Current sources</div>
+  <h2>Where Project Radar gets project data.</h2>
   <div class="coverage-table" id="coverageTable"></div>
+  <p class="micro" style="margin-top: 1.5rem;">
+    Project Radar only includes verified public council sources. Records are reproduced from official council websites and registers with source links retained. No synthetic or inferred projects are included.
+  </p>
+</section>
+
+<section class="section shell" style="background: var(--nz-foam-light);">
+  <div class="section-label">How sources are selected</div>
+  <h2 style="text-align: center;">Why these councils, why now.</h2>
+  <div class="method-grid" style="margin-top: 2rem;">
+    <div class="method">
+      <span>01</span>
+      <h3>Machine-readable data</h3>
+      <p>APIs and downloadable registers that can be queried automatically without manual PDF reading.</p>
+    </div>
+    <div class="method">
+      <span>02</span>
+      <h3>High applicability</h3>
+      <p>Councils with substantial commercial and residential development activity where spray foam fit is realistic.</p>
+    </div>
+    <div class="method">
+      <span>03</span>
+      <h3>Proven ingestion</h3>
+      <p>Sources are tested and validated before publication. Raw council data is retained alongside classification.</p>
+    </div>
+    <div class="method">
+      <span>04</span>
+      <h3>National footprint</h3>
+      <p>Coverage expands to match NZ Foam's regional presence and sales priorities.</p>
+    </div>
+  </div>
 </section>
 
 <section class="section shell">
-  <div class="section-label">National rollout</div>
-  <div class="method-grid">
-    <div class="method"><span>01</span><h3>API first</h3><p>Machine-readable council sources become automated adapters immediately.</p></div>
-    <div class="method"><span>02</span><h3>Recurring files</h3><p>PDF, CSV, XLSX and subscription registers enter a standard ingestion pipeline.</p></div>
-    <div class="method"><span>03</span><h3>Normalise once</h3><p>Every source maps into the same project, consent, stage, geography and provenance model.</p></div>
-    <div class="method"><span>04</span><h3>Customer lenses</h3><p>The national engine powers NZ Foam, project managers, contractors and trade-specific feeds.</p></div>
+  <div class="section-label\">Data quality</div>
+  <h2>What you can rely on.</h2>
+  <div class="data-quality-grid">
+    <div class="card">
+      <h3>Source verified</h3>
+      <p>All records come from official council APIs, published registers, or verified reports. Source links are included so you can check the original.</p>
+    </div>
+    <div class="card">
+      <h3>Deduplicated</h3>
+      <p>The same project is not shown twice even if it appears in multiple council systems.</p>
+    </div>
+    <div class="card">
+      <h3>Classified</h3>
+      <p>Project type, scale, consent stage and NZ Foam fit are derived from council descriptions. Manual review remains essential.</p>
+    </div>
+    <div class="card">
+      <h3>Current</h3>
+      <p>Data reflects the current live council source. Some councils update daily; others weekly or monthly.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section shell">
+  <h2>Why use council sources</h2>
+  <p>Council records describe regulatory intent. A building consent or resource consent means:</p>
+  <ul style="font-size: 1.05rem; line-height: 1.8;">
+    <li>✓ A specific project has been lodged with a council</li>
+    <li>✓ The design, location and applicant are verified by an official</li>
+    <li>✓ Estimated project value is often documented</li>
+    <li>✗ Does NOT confirm spray foam is specified</li>
+    <li>✗ Does NOT confirm the project will proceed on the stated timeline</li>
+    <li>✗ Does NOT confirm current contact details are accurate</li>
+  </ul>
+  <p style="margin-top: 1.5rem;">That's why Project Radar is a starting point: find verified development signals early, then contact the builder or PM to confirm relevance and get plans.</p>
+</section>
+
+<section class="section shell" style="background: var(--nz-foam-light);">
+  <h2 style="text-align: center;">Questions about coverage?</h2>
+  <p style="text-align: center; max-width: 600px; margin: 1rem auto;">
+    Contact NZ Foam to discuss which regions and project types matter most to your team.
+  </p>
+  <div style="text-align: center;">
+    <a class="button primary" href="tel:+64-800-693-626">+64 800 693 626</a>
+    <a class="button" href="mailto:info@nzfoam.co.nz">info@nzfoam.co.nz</a>
   </div>
 </section>
 </main>
-<footer class="shell footer"><div class="brand">CDI<span>001</span> New Zealand</div><p>National coverage expanding council by council</p><a href="/">CDI home</a></footer>
+<footer class="shell footer">
+  <div class="brand">NZ Foam Project Radar</div>
+  <p>Spray foam commercial intelligence from verified council sources</p>
+  <p style="font-size: 0.9rem;">
+    <a href="/">Home</a> • <a href="/nz-foam/">Radar</a> • <a href="/nz-foam/jacob/">Guide</a>
+  </p>
+</footer>
 <script src="/national/national.js"></script>
 </body>
 </html>
+

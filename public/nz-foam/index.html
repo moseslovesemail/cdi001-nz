@@ -3,55 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="NZ Foam Project Radar — CDI design-partner demo for finding high-fit construction and development opportunities early.">
-  <title>NZ Foam Project Radar — CDI001</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="description" content="NZ Foam Project Radar — spray foam insulation opportunity finder.">
+  <title>NZ Foam Project Radar</title>
+  <link rel="stylesheet" href="/nz-foam/brand.css?v=20260922-brand1">
   <link rel="stylesheet" href="/nz-foam/radar.css">
 </head>
 <body>
   <header class="nav shell">
-    <a class="brand" href="/" aria-label="CDI home">CDI<span>001</span></a>
+    <a class="brand" href="/" aria-label="NZ Foam home">
+      <img src="/nz-foam/assets/logo.png" alt="NZ Foam" class="logo" width="160" height="50">
+      <span class="wordmark">Project Radar</span>
+    </a>
     <nav>
-      <a href="#live-signals">Live signals</a>
-      <a href="#auckland-live">Auckland</a>
-      <a href="#tauranga-live">Tauranga</a>
-      <a href="#scoring">Scoring</a>
-      <a href="#workflow">Workflow</a>
-      <a href="/">CDI home</a>
+      <a href="/nz-foam/">Radar</a>
+      <a href="/national/">Coverage</a>
+      <a href="/nz-foam/jacob/">Guide</a>
     </nav>
   </header>
 
   <main>
     <section class="radar-hero shell">
       <div>
-        <p class="eyebrow">NZ Foam design-partner pilot</p>
-        <h1>NZ Foam<br>Project Radar</h1>
+        <p class="eyebrow">NZ Foam Project Radar</p>
+        <h1>Spray foam opportunities<br>across New Zealand</h1>
       </div>
       <div class="hero-side">
-        <p>Turn development and consent signals across New Zealand into a prioritised national sales feed for NZ Foam.</p>
-        <div class="status-line"><span class="live-dot"></span> Pilot-ready live feed + browser review workflow</div>
+        <p>Find high-fit spray foam insulation projects early. Track opportunities, record outcomes, and measure results.</p>
+        <div class="status-line"><span class="live-dot"></span>Live feed • browser review workspace</div>
       </div>
     </section>
 
     <section class="radar-strip">
       <div class="shell radar-metrics">
-        <div><span>Live scored records</span><strong id="metricLiveCount">—</strong><small>Auckland + Tauranga + Canterbury</small></div>
-        <div><span>High fit</span><strong id="metricHighCount">—</strong><small>75+ preliminary score</small></div>
-        <div><span>Qualify</span><strong id="metricQualifyCount">—</strong><small>55–74 preliminary score</small></div>
-        <div><span>High + qualify pipeline</span><strong id="metricPipeline">—</strong><small>published project values</small></div>
+        <div><span>Detected opportunities</span><strong id="metricLiveCount">—</strong><small>Auckland • Tauranga • Canterbury</small></div>
+        <div><span>High fit</span><strong id="metricHighCount">—</strong><small>Score 75+</small></div>
+        <div><span>Qualify</span><strong id="metricQualifyCount">—</strong><small>Score 55–74</small></div>
+        <div><span>Pipeline value</span><strong id="metricPipeline">—</strong><small>High + Qualify projects</small></div>
       </div>
     </section>
 
-    <section class="section shell pilot-control-section" id="pilot-control">
+    <section class="section shell" id="workspace-control">
       <div class="radar-title-row">
         <div>
-          <div class="section-label">Design-partner pilot</div>
-          <h2>Review projects and measure what turns into revenue.</h2>
+          <div class="section-label">Sales workspace</div>
+          <h2>Track and review spray foam opportunities.</h2>
         </div>
-        <div class="radar-note">Feedback is currently stored in this browser so the pilot remains zero-cost. Export CSV at any time.</div>
+        <div class="radar-note">Review data is stored locally in your browser. Export CSV to share with your team.</div>
       </div>
-      <div class="pilot-panel">
-        <div class="pilot-stats pilot-stats-six">
+      <div class="workspace-panel">
+        <div class="workspace-stats workspace-stats-six">
           <div><span>Reviewed</span><strong id="pilotReviewed">0</strong></div>
           <div><span>Relevant</span><strong id="pilotRelevant">0</strong></div>
           <div><span>Contacted</span><strong id="pilotContacted">0</strong></div>
@@ -59,8 +59,8 @@
           <div><span>Quote pipeline</span><strong id="pilotQuotePipeline">$0</strong></div>
           <div><span>Won revenue</span><strong id="pilotWonRevenue">$0</strong></div>
         </div>
-        <div class="pilot-actions">
-          <div class="live-filters" aria-label="Live opportunity filters">
+        <div class="workspace-actions">
+          <div class="live-filters" aria-label="Opportunity filters">
             <button class="live-filter active" data-live-filter="all">All</button>
             <button class="live-filter" data-live-filter="high">High fit</button>
             <button class="live-filter" data-live-filter="qualify">Qualify</button>
@@ -68,96 +68,117 @@
             <button class="live-filter" data-live-filter="unreviewed">Unreviewed</button>
             <button class="live-filter" data-live-filter="reviewed">Reviewed</button>
           </div>
-          <button class="button export-button" id="exportPilotCsv" type="button">Export pilot CSV</button>
+          <button class="button export-button" id="exportPilotCsv" type="button">Export reviews</button>
         </div>
-        <p class="pilot-storage-note">A shared NZ Foam team database is deliberately deferred until the workflow is validated. This prototype records relevance, owner, contact, plans, quote value, outcome, revenue and notes locally.</p>
+        <p class="workspace-note">Data is stored locally in your browser until you export. No shared team database yet.</p>
       </div>
     </section>
 
     <section class="section shell" id="live-signals">
       <div class="radar-title-row">
         <div>
-          <div class="section-label">Canterbury verified signals</div>
-          <h2>Early resource and building-consent signals.</h2>
+          <div class="section-label">Verified signals</div>
+          <h2>Canterbury resource and building consents.</h2>
         </div>
-        <div class="radar-note" id="canterburyFoamStatus">Loading verified Selwyn and Waimakariri signals…</div>
+        <div class="radar-note" id="canterburyFoamStatus">Loading verified signals…</div>
       </div>
       <div class="opportunity-list" id="canterburyFoamRecords"></div>
-      <div class="notice"><strong>Coverage boundary:</strong> these records are verified public signals used to prove the Canterbury ingestion model. They are not complete Canterbury coverage; Christchurch's detailed monthly issued-consent feed remains the next high-value Canterbury source.</div>
+      <div class="notice"><strong>Coverage:</strong> verified public signals from Selwyn and Waimakariri District Councils proving the ingestion model. Not complete Canterbury coverage.</div>
     </section>
 
     <section class="section shell" id="auckland-live">
       <div class="radar-title-row">
         <div>
-          <div class="section-label">Auckland live API</div>
-          <h2>High-value Auckland building consents.</h2>
+          <div class="section-label">Auckland Council</div>
+          <h2>High-value building consents.</h2>
         </div>
-        <div class="radar-note" id="aucklandFoamStatus">Loading Auckland Council $1m+ consent layer…</div>
+        <div class="radar-note" id="aucklandFoamStatus">Loading Auckland Council data…</div>
       </div>
-
       <div class="opportunity-list" id="aucklandFoamRecords"></div>
-      <div class="notice"><strong>Coverage boundary:</strong> Auckland Council's public layer is a selected high-value subset covering operative building consents above NZ$1m issued in the past two years. CDI does not present this as full Auckland coverage.</div>
+      <div class="notice"><strong>Coverage:</strong> public high-value subset of Auckland Council operative building consents (NZ$1m+, issued past 2 years).</div>
     </section>
 
     <section class="section shell" id="tauranga-live">
       <div class="radar-title-row">
         <div>
-          <div class="section-label">Tauranga verified monthly report</div>
-          <h2>Major Tauranga consents over $1m.</h2>
+          <div class="section-label">Tauranga City Council</div>
+          <h2>Major consents over $1m.</h2>
         </div>
-        <div class="radar-note" id="taurangaFoamStatus">Loading Tauranga City Council major-consent report…</div>
+        <div class="radar-note" id="taurangaFoamStatus">Loading Tauranga City Council data…</div>
       </div>
       <div class="opportunity-list" id="taurangaFoamRecords"></div>
-      <div class="notice"><strong>Coverage boundary:</strong> this feed is the council's July 2026 “Major Consent Applications Issued Value over $1m” table. It is verified monthly-report data, not a live all-consents API. We will automate the monthly PDF ingestion after the pilot logic is validated.</div>
+      <div class="notice"><strong>Coverage:</strong> verified monthly report, "Major Consent Applications Issued Value over $1m".</div>
     </section>
 
     <section class="section shell" id="scoring">
-      <div class="section-label">NZ Foam fit score</div>
+      <div class="section-label">How to read an opportunity</div>
       <div class="split">
-        <h2>Not every consent is a lead. The scoring layer decides what deserves sales attention.</h2>
+        <h2>What the NZ Foam fit score means.</h2>
         <div class="score-factors">
-          <div><span>30%</span><strong>Building / project type</strong><p>Warehouse, agricultural, commercial roof, coolstore, specialty, residential and civil fit.</p></div>
-          <div><span>20%</span><strong>Construction signals</strong><p>Steel frame, roof form, exposed cavities, thermal storage, modular/container or civil-fill indicators.</p></div>
-          <div><span>20%</span><strong>Project scale</strong><p>Estimated value, floor area, units and likely install volume.</p></div>
-          <div><span>15%</span><strong>Consent stage</strong><p>Earlier-stage projects may be more valuable when specifications can still change.</p></div>
-          <div><span>10%</span><strong>Geography / deployment</strong><p>Nationwide operation allows scoring against team location and route efficiency.</p></div>
-          <div><span>5%</span><strong>Data confidence</strong><p>Official source quality and completeness.</p></div>
+          <div><strong>Project type</strong><p>Warehouse, agricultural, commercial, specialty and residential fit. Score reflects building category and insulation likelihood.</p></div>
+          <div><strong>Stage</strong><p>Consent stage (application, approved, building consent issued). Earlier stages allow more specification influence.</p></div>
+          <div><strong>Scale</strong><p>Estimated project value, floor area and likely install volume indicate commercial relevance.</p></div>
+          <div><strong>Confidence</strong><p>Source quality and record completeness. Official council data only.</p></div>
+        </div>
+        <div class="score-caveats">
+          <strong>What the score does NOT claim:</strong>
+          <ul>
+            <li>Spray foam was specified or will be specified</li>
+            <li>The project will proceed or timelines are certain</li>
+            <li>Exact construction cost or budget accuracy</li>
+            <li>Applicant contact details are current or verified</li>
+            <li>Scoring is fully automated — manual review still needed</li>
+          </ul>
         </div>
       </div>
     </section>
 
     <section class="workflow section" id="workflow">
       <div class="shell">
-        <div class="section-label light">Sales workflow</div>
+        <div class="section-label light">Typical workflow</div>
         <div class="workflow-line">
-          <div><span>01</span><strong>Consent appears</strong><p>CDI detects a new or changed development signal.</p></div>
-          <div><span>02</span><strong>Classify + score</strong><p>Project type, stage, scale and likely NZ Foam product fit.</p></div>
-          <div><span>03</span><strong>Assign lead</strong><p>Route to the right regional salesperson or technical specialist.</p></div>
-          <div><span>04</span><strong>Get plans</strong><p>Approach the builder, architect or project manager before insulation decisions are fixed.</p></div>
-          <div><span>05</span><strong>Quote + track</strong><p>Quote from plans and record outcome to improve future scoring.</p></div>
+          <div><span>01</span><strong>Find</strong><p>Use filters to locate high-fit opportunities in your area or sector.</p></div>
+          <div><span>02</span><strong>Review</strong><p>Read project details, consent stage, estimated value, and source confidence.</p></div>
+          <div><span>03</span><strong>Contact</strong><p>Call or visit the builder, project manager or architect. Mark as contacted in your review.</p></div>
+          <div><span>04</span><strong>Plans</strong><p>Request plans to assess insulation needs and determine quote requirements.</p></div>
+          <div><span>05</span><strong>Record</strong><p>Log quote value, outcome and revenue. Export to share results with your team.</p></div>
         </div>
       </div>
     </section>
 
     <section class="section shell">
-      <div class="section-label">Design-partner objective</div>
-      <div class="split">
-        <h2>Use NZ Foam to prove CDI can generate attributable revenue.</h2>
-        <div class="body-copy">
-          <p>The first useful measure is not database size. It is whether the radar identifies projects the sales team would otherwise have found later — or not at all.</p>
-          <p>For each opportunity, track: detected date, salesperson, contact date, plans received, quote value, outcome, lost reason and revenue won. That produces a direct CDI → pipeline → revenue case study.</p>
-          <a class="button primary" href="mailto:moseslovesemail@gmail.com?subject=NZ%20Foam%20Project%20Radar">Discuss design-partner pilot</a>
+      <div class="section-label">Important caveats</div>
+      <div class="caveats-grid">
+        <div class="card">
+          <h3>Data is incomplete</h3>
+          <p>Coverage varies by council and consent type. Some major projects may not appear. Do not assume absence from the radar means no opportunity.</p>
+        </div>
+        <div class="card">
+          <h3>Browser storage only</h3>
+          <p>Reviews are stored locally. Clear your browser data and reviews are lost. Export regularly to your sales tool or spreadsheet.</p>
+        </div>
+        <div class="card">
+          <h3>Score is indicative</h3>
+          <p>The fit score is a guide, not a guarantee. Manual review of each project remains essential.</p>
+        </div>
+        <div class="card">
+          <h3>Consents change</h3>
+          <p>Project scope, timeline and contractor decisions change frequently. Always verify current project status with the builder or PM.</p>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="shell footer">
-    <div class="brand">CDI<span>001</span> / NZ Foam Project Radar</div>
-    <p>Verified council-source layer + NZ Foam pilot workflow</p>
-    <a href="/">CDI home</a>
+    <div class="brand">NZ Foam Project Radar</div>
+    <p>Spray foam commercial intelligence from verified council sources</p>
+    <p style="font-size: 0.9rem;">
+      <a href="tel:+64-800-693-626">+64 800 693 626</a> •
+      <a href="mailto:info@nzfoam.co.nz">info@nzfoam.co.nz</a>
+    </p>
   </footer>
 
   <script src="/nz-foam/radar.js"></script>
 </body>
 </html>
+

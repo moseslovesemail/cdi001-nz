@@ -4,20 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta name="description" content="NZ Foam Project Radar project detail and contact intelligence.">
+  <meta name="description" content="NZ Foam Project Radar — project detail and contact intelligence.">
   <title>Project Detail — NZ Foam Project Radar</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/nz-foam/brand.css?v=20260922-brand1">
   <link rel="stylesheet" href="/nz-foam/radar.css">
   <link rel="stylesheet" href="/nz-foam/project/project.css">
 </head>
 <body>
 <header class="nav shell">
-  <a class="brand" href="/nz-foam/">CDI<span>001</span> / NZ Foam</a>
-  <nav><a href="/nz-foam/">Back to radar</a><a href="/nz-foam/jacob/">Jacob preview</a></nav>
+  <a class="brand" href="/" aria-label="NZ Foam home">
+    <img src="/nz-foam/assets/logo.png" alt="NZ Foam" class="logo" width="160" height="50">
+    <span class="wordmark">Project Radar</span>
+  </a>
+  <nav>
+    <a href="/nz-foam/">Radar</a>
+    <a href="/nz-foam/jacob/">Guide</a>
+  </nav>
 </header>
 
 <main class="shell project-shell">
-  <div id="projectLoading" class="project-loading">Loading verified project intelligence…</div>
+  <div id="projectLoading" class="project-loading">Loading project details…</div>
   <div id="projectApp" hidden>
     <section class="project-hero">
       <div class="project-score-wrap">
@@ -47,7 +53,7 @@
       </article>
 
       <article class="project-panel">
-        <div class="section-label">Project / consent position</div>
+        <div class="section-label">Project / consent details</div>
         <dl class="project-facts" id="projectFacts"></dl>
         <p class="project-copy" id="stageNote"></p>
       </article>
@@ -64,21 +70,21 @@
       <div class="recommended-contact" id="contactStrategy"></div>
       <div class="contact-list" id="contactList"></div>
       <div class="contact-empty" id="contactEmpty" hidden>
-        <h3>No verified project contact is loaded yet.</h3>
+        <h3>No verified contact information yet.</h3>
         <p id="fallbackContactAdvice"></p>
-        <p>CDI will not invent a person. Until enrichment is verified, use the council source and target the recommended project role.</p>
+        <p>Use the council source to identify the relevant project role and reach out directly.</p>
       </div>
     </section>
 
     <section class="project-section">
-      <div class="section-label">Outreach assistant</div>
+      <div class="section-label">Outreach template</div>
       <div class="outreach-grid">
         <div>
-          <h2>Start the conversation with context.</h2>
-          <p class="project-copy">The draft below uses the project description and asks to be routed to the person responsible for insulation, roofing or envelope decisions. Edit it before sending.</p>
+          <h2>Prepare your first contact.</h2>
+          <p class="project-copy">Edit the draft message below before sending. Include the project context and ask for plans or a site visit.</p>
         </div>
         <div class="outreach-card">
-          <textarea id="outreachDraft" aria-label="Suggested outreach"></textarea>
+          <textarea id="outreachDraft" aria-label="Suggested outreach message"></textarea>
           <div class="outreach-actions">
             <button class="button primary" id="copyOutreach" type="button">Copy message</button>
             <a class="button" id="emailBestContact" hidden>Email best contact</a>
@@ -88,45 +94,54 @@
     </section>
 
     <section class="project-section" id="linkedSection">
-      <div class="section-label">Linked project evidence</div>
+      <div class="section-label">Related projects</div>
       <div id="linkedRecords" class="linked-list"></div>
     </section>
 
     <section class="project-section">
-      <div class="section-label">Pilot outcome</div>
+      <div class="section-label">Your review</div>
       <div class="project-review-grid">
-        <label>Sales review
+        <label>Is this relevant to NZ Foam?
           <select id="detailStatus">
             <option value="">Unreviewed</option>
-            <option value="relevant">Relevant</option>
-            <option value="watch">Watch</option>
-            <option value="rejected">Not relevant</option>
+            <option value="relevant">Yes, relevant</option>
+            <option value="watch">Maybe, watch it</option>
+            <option value="rejected">No, not relevant</option>
           </select>
         </label>
-        <label>Owner<input id="detailOwner" placeholder="Salesperson"></label>
-        <label>Contacted
+        <label>Assigned to<input id="detailOwner" placeholder="Your name or initials"></label>
+        <label>First contact made
           <select id="detailContacted"><option value="false">No</option><option value="true">Yes</option></select>
         </label>
         <label>Plans received
           <select id="detailPlans"><option value="false">No</option><option value="true">Yes</option></select>
         </label>
-        <label>Quote value NZD<input id="detailQuote" type="number" min="0" step="100"></label>
+        <label>Quote value (NZD)<input id="detailQuote" type="number" min="0" step="100"></label>
         <label>Outcome
           <select id="detailOutcome">
-            <option value="open">Open</option><option value="won">Won</option>
-            <option value="lost">Lost</option><option value="no-fit">No fit</option>
+            <option value="open">Open / In progress</option>
+            <option value="won">Won</option>
+            <option value="lost">Lost</option>
+            <option value="no-fit">No fit</option>
           </select>
         </label>
-        <label>Revenue won NZD<input id="detailRevenue" type="number" min="0" step="100"></label>
-        <label class="detail-notes">Notes<textarea id="detailNotes"></textarea></label>
+        <label>Revenue won (NZD)<input id="detailRevenue" type="number" min="0" step="100"></label>
+        <label class="detail-notes">Notes<textarea id="detailNotes" placeholder="Why lost, what you learned, next steps"></textarea></label>
       </div>
-      <p class="save-status" id="saveStatus">Changes save automatically in this browser.</p>
+      <p class="save-status" id="saveStatus">Changes save automatically to your browser.</p>
     </section>
   </div>
 
   <div id="projectError" class="notice" hidden></div>
 </main>
 
+<footer class="shell footer" style="margin-top: 3rem;">
+  <p style="margin: 0; color: var(--nz-foam-dark); font-size: 0.9rem;">
+    NZ Foam Project Radar — <a href="/nz-foam/">Back to radar</a> — <a href="/nz-foam/jacob/">Team guide</a>
+  </p>
+</footer>
+
 <script src="/nz-foam/project/project.js"></script>
 </body>
 </html>
+
