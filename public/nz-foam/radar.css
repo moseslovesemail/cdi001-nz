@@ -105,3 +105,13 @@
  .pilot-actions{display:block}.export-button{margin-top:14px;width:100%}
  .review-inner{grid-template-columns:1fr}
 }
+
+.pilot-control-section{padding-bottom:70px}
+.pilot-stats-six{grid-template-columns:repeat(6,1fr)}
+.review-inner-full{grid-template-columns:repeat(3,minmax(0,1fr))}
+.review-notes-label{grid-column:1/-1}
+.review-inner select{font:inherit;font-size:12px;border:1px solid #ccc;padding:8px;background:#fff;color:#111}
+.outcome-won{background:#111;color:#fff;border-color:#111}
+.outcome-lost,.outcome-no-fit{color:#777}
+@media(max-width:1000px){.pilot-stats-six{grid-template-columns:repeat(3,1fr)}.review-inner-full{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.pilot-stats-six{grid-template-columns:1fr 1fr}.review-inner-full{grid-template-columns:1fr}}
