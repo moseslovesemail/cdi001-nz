@@ -27,7 +27,7 @@ function fallbackRole(record){
 }
 function outreachFor(record,enrichment,best){
   const project=enrichment?.project_name||record.description||"project";
-  const recipient=best?.person||best?.organisation||"there";
+  const recipient=best?.direct_person_contact&&best?.person?best.person:(best?.organisation?best.organisation+" team":"there");
   const route=best?.contact_note ? "\n\nI’m hoping you can point me to the person responsible for this package." : "";
   return `Hi ${recipient},
 
