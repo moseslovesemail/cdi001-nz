@@ -41,11 +41,11 @@
     {
       "name": "Tauranga City Council",
       "region": "Bay of Plenty",
-      "building_status": "READY_PDF",
+      "building_status": "LIVE_MONTHLY",
       "resource_status": "READY_PDF",
-      "method": "Monthly PDF reports",
+      "method": "Monthly PDF major-consent table",
       "cost": "Free",
-      "notes": "Building and resource consent reports updated monthly."
+      "notes": "Official monthly report ingested for major $1m+ consent applications; monthly automation next."
     },
     {
       "name": "Queenstown Lakes District Council",
@@ -73,6 +73,7 @@
     "READY_DASHBOARD": "Downloadable/searchable source identified; adapter next",
     "READY_PAID": "Low-cost recurring electronic feed identified",
     "READY_SUBSCRIPTION": "Recurring feed identified; subscription setup required",
-    "PLANNED": "Source still to be onboarded"
+    "PLANNED": "Source still to be onboarded",
+    "LIVE_MONTHLY": "Verified recurring monthly source currently ingested; automated retrieval being added"
   }
 }
