@@ -1,12 +1,12 @@
 const buttons = [...document.querySelectorAll(".radar-filter")];
-const opportunities = [...document.querySelectorAll("#opportunityList .opportunity")];
+const examples = [...document.querySelectorAll("#opportunityList .opportunity")];
 const search = document.querySelector("#projectSearch");
 let category = "all";
 
 function applyFilters() {
   if (!search) return;
   const q = (search.value || "").trim().toLowerCase();
-  opportunities.forEach((item) => {
+  examples.forEach((item) => {
     const categoryMatch = category === "all" || item.dataset.category === category;
     const searchMatch = !q || (item.dataset.search || "").includes(q) || item.textContent.toLowerCase().includes(q);
     item.hidden = !(categoryMatch && searchMatch);
@@ -28,7 +28,7 @@ const compactMoney = n => {
   if (n >= 1_000_000_000) return "$" + (n/1_000_000_000).toFixed(1).replace(".0","") + "b";
   if (n >= 1_000_000) return "$" + (n/1_000_000).toFixed(1).replace(".0","") + "m";
   if (n >= 1_000) return "$" + Math.round(n/1_000) + "k";
-  return "$" + n;
+  return "$" + Math.round(n);
 };
 const foamEsc = s => String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
 const csvEsc = s => {
@@ -37,24 +37,27 @@ const csvEsc = s => {
 };
 
 const REVIEW_KEY = "cdi-nzfoam-pilot-reviews-v2";
+let liveCanterburyRecords = [];
 let liveAucklandRecords = [];
 let liveTaurangaRecords = [];
 let liveFilter = "all";
 
-function allLiveRecords(){ return [...liveAucklandRecords,...liveTaurangaRecords]; }
+function allLiveRecords(){ return [...liveAucklandRecords,...liveTaurangaRecords,...liveCanterburyRecords]; }
 function recordKey(record){ return `${record.council||"Council"}::${record.consent_reference || record.address || record.description}`; }
+function blankReview(){ return {status:"",owner:"",notes:"",contacted:false,plans:false,quote_value:0,outcome:"open",revenue_won:0}; }
 
 function loadReviews(){
   try { return JSON.parse(localStorage.getItem(REVIEW_KEY) || "{}"); }
   catch { return {}; }
 }
 function saveReviews(reviews){ localStorage.setItem(REVIEW_KEY, JSON.stringify(reviews)); }
-function reviewFor(record){ return loadReviews()[recordKey(record)] || {status:"",owner:"",notes:""}; }
-function setReview(key, patch){
+function reviewFor(record){ return {...blankReview(),...(loadReviews()[recordKey(record)]||{})}; }
+function setReview(key, patch, rerender=true){
   const reviews=loadReviews();
-  reviews[key]={...(reviews[key]||{status:"",owner:"",notes:""}),...patch,updated_at:new Date().toISOString()};
+  reviews[key]={...blankReview(),...(reviews[key]||{}),...patch,updated_at:new Date().toISOString()};
   saveReviews(reviews);
-  renderAllLive();
+  if(rerender) renderAllLive();
+  else updatePilotStats();
 }
 
 function priorityForScore(score){
@@ -66,6 +69,11 @@ function reviewLabel(status){
   return status === "relevant" ? "Relevant" :
          status === "watch" ? "Watch" :
          status === "rejected" ? "Not relevant" : "Unreviewed";
+}
+function outcomeLabel(outcome){
+  return outcome === "won" ? "Won" :
+         outcome === "lost" ? "Lost" :
+         outcome === "no-fit" ? "No fit" : "Open";
 }
 function reviewMatches(record){
   const review=reviewFor(record);
@@ -90,12 +98,14 @@ function updateTopMetrics(){
 }
 
 function updatePilotStats(){
-  const statuses=allLiveRecords().map(x=>reviewFor(x).status || "");
+  const reviews=allLiveRecords().map(reviewFor);
   const set=(id,value)=>{ const el=document.querySelector(id); if(el) el.textContent=value; };
-  set("#pilotReviewed",statuses.filter(Boolean).length);
-  set("#pilotRelevant",statuses.filter(x=>x==="relevant").length);
-  set("#pilotWatch",statuses.filter(x=>x==="watch").length);
-  set("#pilotRejected",statuses.filter(x=>x==="rejected").length);
+  set("#pilotReviewed",reviews.filter(x=>Boolean(x.status)).length);
+  set("#pilotRelevant",reviews.filter(x=>x.status==="relevant").length);
+  set("#pilotContacted",reviews.filter(x=>Boolean(x.contacted)).length);
+  set("#pilotPlans",reviews.filter(x=>Boolean(x.plans)).length);
+  set("#pilotQuotePipeline",compactMoney(reviews.reduce((sum,x)=>sum+(Number(x.quote_value)||0),0)));
+  set("#pilotWonRevenue",compactMoney(reviews.reduce((sum,x)=>sum+(Number(x.revenue_won)||0),0)));
 }
 
 function reviewControls(record){
@@ -103,15 +113,20 @@ function reviewControls(record){
   const review=reviewFor(record);
   const active=s=>review.status===s?" active":"";
   return `<details class="review-box">
-    <summary>Sales review · <strong>${reviewLabel(review.status)}</strong></summary>
-    <div class="review-inner">
+    <summary>Sales review · <strong>${reviewLabel(review.status)}</strong>${review.outcome==="won" ? " · WON" : ""}</summary>
+    <div class="review-inner review-inner-full">
       <div class="review-buttons">
         <button type="button" class="review-choice${active("relevant")}" data-review-key="${foamEsc(key)}" data-review-status="relevant">Relevant</button>
         <button type="button" class="review-choice${active("watch")}" data-review-key="${foamEsc(key)}" data-review-status="watch">Watch</button>
         <button type="button" class="review-choice${active("rejected")}" data-review-key="${foamEsc(key)}" data-review-status="rejected">Not relevant</button>
       </div>
-      <label>Owner<input class="review-owner" data-review-key="${foamEsc(key)}" value="${foamEsc(review.owner||"")}" placeholder="Salesperson"></label>
-      <label>Notes<textarea class="review-notes" data-review-key="${foamEsc(key)}" placeholder="Why useful / why not?">${foamEsc(review.notes||"")}</textarea></label>
+      <label>Owner<input class="review-field" data-review-key="${foamEsc(key)}" data-review-field="owner" value="${foamEsc(review.owner||"")}" placeholder="Salesperson"></label>
+      <label>Contacted<select class="review-field" data-review-key="${foamEsc(key)}" data-review-field="contacted"><option value="false"${!review.contacted?" selected":""}>No</option><option value="true"${review.contacted?" selected":""}>Yes</option></select></label>
+      <label>Plans received<select class="review-field" data-review-key="${foamEsc(key)}" data-review-field="plans"><option value="false"${!review.plans?" selected":""}>No</option><option value="true"${review.plans?" selected":""}>Yes</option></select></label>
+      <label>Quote value NZD<input class="review-field" type="number" min="0" step="100" data-review-key="${foamEsc(key)}" data-review-field="quote_value" value="${Number(review.quote_value)||""}" placeholder="0"></label>
+      <label>Outcome<select class="review-field" data-review-key="${foamEsc(key)}" data-review-field="outcome"><option value="open"${review.outcome==="open"?" selected":""}>Open</option><option value="won"${review.outcome==="won"?" selected":""}>Won</option><option value="lost"${review.outcome==="lost"?" selected":""}>Lost</option><option value="no-fit"${review.outcome==="no-fit"?" selected":""}>No fit</option></select></label>
+      <label>Revenue won NZD<input class="review-field" type="number" min="0" step="100" data-review-key="${foamEsc(key)}" data-review-field="revenue_won" value="${Number(review.revenue_won)||""}" placeholder="0"></label>
+      <label class="review-notes-label">Notes<textarea class="review-field" data-review-key="${foamEsc(key)}" data-review-field="notes" placeholder="Why useful / why not? What happened next?">${foamEsc(review.notes||"")}</textarea></label>
     </div>
   </details>`;
 }
@@ -120,11 +135,14 @@ function bindReviewControls(){
   document.querySelectorAll(".review-choice").forEach(btn=>{
     btn.addEventListener("click",()=>setReview(btn.dataset.reviewKey,{status:btn.dataset.reviewStatus}));
   });
-  document.querySelectorAll(".review-owner").forEach(input=>{
-    input.addEventListener("change",()=>setReview(input.dataset.reviewKey,{owner:input.value.trim()}));
-  });
-  document.querySelectorAll(".review-notes").forEach(input=>{
-    input.addEventListener("change",()=>setReview(input.dataset.reviewKey,{notes:input.value.trim()}));
+  document.querySelectorAll(".review-field").forEach(input=>{
+    input.addEventListener("change",()=>{
+      const field=input.dataset.reviewField;
+      let value=input.value;
+      if(field==="contacted" || field==="plans") value=value==="true";
+      if(field==="quote_value" || field==="revenue_won") value=Number(value)||0;
+      setReview(input.dataset.reviewKey,{[field]:value},false);
+    });
   });
 }
 
@@ -134,15 +152,16 @@ function renderRecord(record){
   const reasons=(record.nz_foam_score_reasons||[]).slice(0,4).map(r=>foamEsc(r)).join(" · ");
   const review=reviewFor(record);
   const reviewChip=review.status?`<span class="review-chip review-${foamEsc(review.status)}">${reviewLabel(review.status)}</span>`:"";
+  const outcomeChip=review.outcome && review.outcome!=="open" ? `<span class="review-chip outcome-${foamEsc(review.outcome)}">${outcomeLabel(review.outcome)}</span>` : "";
   const location=record.address?` · ${foamEsc(record.address)}`:"";
   const timing=record.issued_date?`Issued ${foamEsc(record.issued_date)}`:(record.issued_period||record.status||"Issued");
 
   return `<article class="opportunity live-opportunity">
     <div class="score ${scoreClass}"><span>${record.nz_foam_preliminary_fit_score}</span><small>/100</small></div>
     <div class="opp-main">
-      <div class="opp-top"><span class="priority ${priorityClass}">${label}</span><span>${foamEsc(record.council)} · ${foamEsc(record.consent_reference||"reference unavailable")}${location}</span>${reviewChip}</div>
-      <h3>${foamEsc(record.description||"Building consent")}</h3>
-      <p>${foamMoney(record.project_value_nzd)} · ${foamEsc(timing)} · ${foamEsc(record.status||"Issued")}</p>
+      <div class="opp-top"><span class="priority ${priorityClass}">${label}</span><span>${foamEsc(record.council)} · ${foamEsc(record.consent_reference||"reference unavailable")}${location}</span>${reviewChip}${outcomeChip}</div>
+      <h3>${foamEsc(record.description||"Consent signal")}</h3>
+      <p>${foamMoney(record.project_value_nzd)} · ${foamEsc(timing)} · ${foamEsc(record.status||"Signal")}</p>
       <div class="chips">${products}<span>Verified council record</span></div>
       ${reasons ? `<p class="score-reason"><strong>Score basis:</strong> ${reasons}</p>` : ""}
       <a class="source-link" href="${record.source_url}" target="_blank" rel="noreferrer">Open council source ↗</a>
@@ -163,6 +182,7 @@ function renderSource(records,rootId,stateId,label,maxVisible=30){
 }
 
 function renderAllLive(){
+  renderSource(liveCanterburyRecords,"#canterburyFoamRecords","#canterburyFoamStatus","Canterbury",20);
   renderSource(liveAucklandRecords,"#aucklandFoamRecords","#aucklandFoamStatus","Auckland",30);
   renderSource(liveTaurangaRecords,"#taurangaFoamRecords","#taurangaFoamStatus","Tauranga",20);
   bindReviewControls();
@@ -170,31 +190,28 @@ function renderAllLive(){
   updatePilotStats();
 }
 
+async function fetchJsonEndpoint(url){
+  const r=await fetch(url);
+  const d=await r.json();
+  if(!r.ok) throw new Error(d.detail||d.error||"Unable to load");
+  return d;
+}
+
 async function loadLiveSources(){
-  const [akl,tga]=await Promise.allSettled([
-    fetch("/api/auckland/high-value").then(async r=>{const d=await r.json(); if(!r.ok) throw new Error(d.detail||d.error); return d;}),
-    fetch("/api/tauranga/major").then(async r=>{const d=await r.json(); if(!r.ok) throw new Error(d.detail||d.error); return d;})
+  const [can,akl,tga]=await Promise.allSettled([
+    fetchJsonEndpoint("/api/canterbury/verified"),
+    fetchJsonEndpoint("/api/auckland/high-value"),
+    fetchJsonEndpoint("/api/tauranga/major")
   ]);
 
-  if(akl.status==="fulfilled"){
-    liveAucklandRecords=[...akl.value.records].sort((a,b)=>
-      (b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score) ||
-      (Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0))
-    );
-  }else{
-    const state=document.querySelector("#aucklandFoamStatus");
-    if(state) state.textContent="Auckland source temporarily unavailable";
-  }
+  if(can.status==="fulfilled") liveCanterburyRecords=[...can.value.records].sort((a,b)=>b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score);
+  else { const el=document.querySelector("#canterburyFoamStatus"); if(el) el.textContent="Canterbury source temporarily unavailable"; }
 
-  if(tga.status==="fulfilled"){
-    liveTaurangaRecords=[...tga.value.records].sort((a,b)=>
-      (b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score) ||
-      (Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0))
-    );
-  }else{
-    const state=document.querySelector("#taurangaFoamStatus");
-    if(state) state.textContent="Tauranga source temporarily unavailable";
-  }
+  if(akl.status==="fulfilled") liveAucklandRecords=[...akl.value.records].sort((a,b)=>(b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score)||(Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0)));
+  else { const el=document.querySelector("#aucklandFoamStatus"); if(el) el.textContent="Auckland source temporarily unavailable"; }
+
+  if(tga.status==="fulfilled") liveTaurangaRecords=[...tga.value.records].sort((a,b)=>(b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score)||(Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0)));
+  else { const el=document.querySelector("#taurangaFoamStatus"); if(el) el.textContent="Tauranga source temporarily unavailable"; }
 
   renderAllLive();
 }
@@ -211,13 +228,14 @@ document.querySelectorAll(".live-filter").forEach(btn=>{
 const exportButton=document.querySelector("#exportPilotCsv");
 if(exportButton){
   exportButton.addEventListener("click",()=>{
-    const headers=["Council","Consent Reference","Address","Issued Date / Period","Description","Project Value NZD","CDI Fit Score","Fit Band","Product Candidates","Score Reasons","Recommended Action","Sales Review","Owner","Notes","Source URL"];
+    const headers=["Council","Consent Reference","Address","Issued Date / Period","Description","Project Value NZD","CDI Fit Score","Fit Band","Product Candidates","Score Reasons","Recommended Action","Sales Review","Owner","Contacted","Plans Received","Quote Value NZD","Outcome","Revenue Won NZD","Notes","Source URL"];
     const rows=allLiveRecords().map(x=>{
       const review=reviewFor(x);
       return [
         x.council,x.consent_reference,x.address||"",x.issued_date||x.issued_period||"",x.description,x.project_value_nzd,
         x.nz_foam_preliminary_fit_score,x.nz_foam_fit_band,(x.nz_foam_product_candidates||[]).join("; "),
-        (x.nz_foam_score_reasons||[]).join("; "),x.recommended_action,reviewLabel(review.status),review.owner||"",review.notes||"",x.source_url
+        (x.nz_foam_score_reasons||[]).join("; "),x.recommended_action,reviewLabel(review.status),review.owner||"",
+        review.contacted?"Yes":"No",review.plans?"Yes":"No",review.quote_value||0,outcomeLabel(review.outcome),review.revenue_won||0,review.notes||"",x.source_url
       ];
     });
     const csv=[headers,...rows].map(row=>row.map(csvEsc).join(",")).join("\n");
