@@ -209,6 +209,7 @@ const server = http.createServer(async (req, res) => {
         where: "1=1",
         outFields: "ConsentReference,ConsentDescription,ConsentStatus,ProjectValue,IssuedDate,ApplicationSubType",
         returnGeometry: "false",
+        returnDistinctValues: "true",
         orderByFields: "IssuedDate DESC,ProjectValue DESC",
         resultRecordCount: "100",
         f: "json"
@@ -217,7 +218,7 @@ const server = http.createServer(async (req, res) => {
       if (data.error) throw new Error(data.error.message || "ArcGIS query failed");
 
       const uniqueFeatures = dedupeByReference(data.features);
-      const records = uniqueFeatures.slice(0, 40).map((f) => {
+      const records = uniqueFeatures.slice(0, 75).map((f) => {
         const a = f.attributes || {};
         const analysis = nzFoamAnalysis(a.ConsentDescription, a.ApplicationSubType, a.ProjectValue);
         return {
