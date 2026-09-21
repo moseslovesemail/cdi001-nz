@@ -1,0 +1,123 @@
+{
+  "version": "2026-09-22",
+  "methodology": "Only public professional/business contacts are included. Project relationship and contact-route confidence are stored separately. A general office contact is never represented as the named project decision-maker unless the source supports that.",
+  "projects": {
+    "Tauranga City Council::TGA-2026-07-10-RETI": {
+      "project_name": "Ebbett Tauriko — New Showrooms Workshop",
+      "stage_note": "Building consent issued; related Tauranga resource consent granted March 2026.",
+      "recommended_contact_strategy": "Start with Ebbett as applicant/client and ask to be routed to the Tauriko automotive-village project lead, architect or project manager. At this stage the client-side project lead is likely more useful than a generic sales contact.",
+      "entities": [
+        {
+          "organisation": "Ebbett Motor Group",
+          "role": "Applicant / client",
+          "project_relationship_confidence": "HIGH",
+          "contact_route_confidence": "HIGH",
+          "recommended": true,
+          "person": null,
+          "phone": "07 578 2843",
+          "email": "tauranga@ebbett.co.nz",
+          "website": "https://www.ebbett.co.nz/dealership/ebbett-tauranga",
+          "source_label": "Tauranga City Council resource-consent report + Ebbett Tauranga official contact",
+          "source_urls": [
+            "https://www.tauranga.govt.nz/Portals/0/data/building-development/planning/resource-consents/files/rc-stats-march-2026.pdf",
+            "https://www.ebbett.co.nz/dealership/ebbett-tauranga"
+          ],
+          "contact_note": "General Ebbett Tauranga business route. Ask specifically for the person managing the new Tauriko automotive village / 10 Reti Place development."
+        }
+      ],
+      "linked_records": [
+        {
+          "type": "Resource consent",
+          "reference": "80068477",
+          "description": "Establish a car yard, showrooms, workshop and ancillary vehicle sales and servicing activities.",
+          "source_url": "https://www.tauranga.govt.nz/Portals/0/data/building-development/planning/resource-consents/files/rc-stats-march-2026.pdf"
+        }
+      ]
+    },
+    "Tauranga City Council::TGA-2026-07-31-TAURIKURA": {
+      "project_name": "Gilmours Tauranga — Internal Coolrooms",
+      "stage_note": "Building consent issued for new internal coolrooms and structural steel support in an existing supermarket.",
+      "recommended_contact_strategy": "Use the operator/tenant as a routing contact and ask for the property, facilities or project lead responsible for the coolroom works. Do not assume customer-service staff own the project.",
+      "entities": [
+        {
+          "organisation": "Gilmours Tauranga",
+          "role": "Site operator / tenant",
+          "project_relationship_confidence": "HIGH",
+          "contact_route_confidence": "MEDIUM",
+          "recommended": true,
+          "person": "Jason Morrissey",
+          "person_role": "Owner",
+          "phone": "0800 270 414",
+          "email": "orders@gilmours.co.nz",
+          "website": "https://www.gilmours.co.nz/locations/tauranga",
+          "source_label": "Gilmours official Tauranga location page",
+          "source_urls": [
+            "https://www.gilmours.co.nz/locations/tauranga",
+            "https://www.gilmours.co.nz/contact-us.php"
+          ],
+          "contact_note": "Public store/customer-service route. Ask for the property/facilities/project person managing the Tauranga coolroom upgrade."
+        }
+      ],
+      "linked_records": [
+        {
+          "type": "Business/site identity",
+          "reference": "31 Taurikura Drive",
+          "description": "Gilmours Tauranga operates at the same address as the consent.",
+          "source_url": "https://www.gilmours.co.nz/locations/tauranga"
+        }
+      ]
+    },
+    "Tauranga City Council::TGA-2026-07-27-MCLEAN": {
+      "project_name": "Tauranga High and District Court — Structural, Façade and Roof Works",
+      "stage_note": "Building consent issued; project is in active construction with Hawkins identified publicly on the court project.",
+      "recommended_contact_strategy": "Because this is an active structural/façade/roof package, start with the main contractor. RCP is a useful secondary project-management route if package responsibility needs to be identified.",
+      "entities": [
+        {
+          "organisation": "Hawkins",
+          "role": "Main contractor",
+          "project_relationship_confidence": "HIGH",
+          "contact_route_confidence": "MEDIUM",
+          "recommended": true,
+          "person": null,
+          "phone": "+64 9 980 2200",
+          "email": null,
+          "website": "https://hawkins.co.nz/contact-us/",
+          "source_label": "Public Tauranga court project event + Hawkins official contact",
+          "source_urls": [
+            "https://www.baycourt.co.nz/whats-on/event-details/tctl/24322_eventdetails/event/b1652a33-48b6-4dac-84ee-15f43f9337fa",
+            "https://hawkins.co.nz/contact-us/"
+          ],
+          "contact_note": "Hawkins is publicly identified with the Tauranga High and District Court project. Call the business and ask for the Tauranga Court project team / roofing-envelope package contact."
+        },
+        {
+          "organisation": "RCP",
+          "role": "Project partner / project-management route",
+          "project_relationship_confidence": "HIGH",
+          "contact_route_confidence": "MEDIUM",
+          "recommended": false,
+          "person": "Josh Harris",
+          "person_role": "Associate | Tauranga Manager",
+          "phone": "+64 27 229 7833",
+          "email": null,
+          "website": "https://rcp.co.nz/contact",
+          "profile_url": "https://rcp.co.nz/people/josh-harris",
+          "source_label": "Court project event + RCP official Tauranga office/people pages",
+          "source_urls": [
+            "https://www.baycourt.co.nz/whats-on/event-details/tctl/24322_eventdetails/event/b1652a33-48b6-4dac-84ee-15f43f9337fa",
+            "https://rcp.co.nz/contact",
+            "https://rcp.co.nz/people/josh-harris"
+          ],
+          "contact_note": "RCP is publicly named as a project partner. Josh Harris is RCP's Tauranga Manager; the public evidence does not prove he is the named PM for this specific project."
+        }
+      ],
+      "linked_records": [
+        {
+          "type": "Public project evidence",
+          "reference": "27 McLean Street",
+          "description": "Hawkins Tauranga High and District Court Project; Ministry of Justice and RCP named among project partners.",
+          "source_url": "https://www.baycourt.co.nz/whats-on/event-details/tctl/24322_eventdetails/event/b1652a33-48b6-4dac-84ee-15f43f9337fa"
+        }
+      ]
+    }
+  }
+}
