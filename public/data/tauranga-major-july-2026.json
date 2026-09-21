@@ -1,0 +1,79 @@
+{
+  "dataset": "Tauranga City Council — Major Building Consent Applications Issued Value over $1m",
+  "period": "July 2026",
+  "source_url": "https://www.tauranga.govt.nz/Portals/0/data/building-development/building/files/stats/2026/july-2026.pdf",
+  "records": [
+    {
+      "id": "TGA-2026-07-140A-OCEANVIEW",
+      "address": "140A OCEANVIEW ROAD",
+      "description": "Additions and alterations to dwelling - additional bedroom and ensuite on ground floor, new decks and stairs, additional bedroom on first floor, ensuite added to bedroom 1 and kitchen relocated.",
+      "project_value_nzd": 1004000
+    },
+    {
+      "id": "TGA-2026-07-138A-OCEANBEACH",
+      "address": "138A OCEANBEACH ROAD",
+      "description": "Construct two level four bedroom dwelling with attached double garage.",
+      "project_value_nzd": 1100000
+    },
+    {
+      "id": "TGA-2026-07-124-HEWLETTS",
+      "address": "124 HEWLETTS ROAD",
+      "description": "Construction of a new build automatic tunnel carwash with associated office and storage and ancillary vehicle grooming facilities.",
+      "project_value_nzd": 2150000
+    },
+    {
+      "id": "TGA-2026-07-10-RETI",
+      "address": "10 RETI PLACE",
+      "description": "Ebbett Tauriko - New Showrooms Workshop",
+      "project_value_nzd": 18000000
+    },
+    {
+      "id": "TGA-2026-07-93-LINKS",
+      "address": "93 LINKS AVENUE",
+      "description": "Erect 2x two-storey two bedroom dwellings (Units 5,6) - duplex. 1x two-storey three-bedroom dwelling (Unit 1) and 3x two-storey two-bedroom dwellings (Units 2-4) - quadplex.",
+      "project_value_nzd": 1800000
+    },
+    {
+      "id": "TGA-2026-07-24-MURICATA",
+      "address": "24 MURICATA AVENUE",
+      "description": "Erect a three-storey four-bedroom dwelling with attached double garage and decks. Inbuilt solid fuel heater, swimming pool and pool fencing and retaining walls.",
+      "project_value_nzd": 1800000
+    },
+    {
+      "id": "TGA-2026-07-2-LEINSTER",
+      "address": "2 LEINSTER AVENUE",
+      "description": "Erect a two-storey four-bedroom dwelling with attached double garage and decks.",
+      "project_value_nzd": 2700000
+    },
+    {
+      "id": "TGA-2026-07-90-BILL-MILLER",
+      "address": "90 BILL MILLER DRIVE",
+      "description": "Installation of racking only for Mitre 10. This consent has a specified intended life of 25 years.",
+      "project_value_nzd": 1500000
+    },
+    {
+      "id": "TGA-2026-07-199-CAMERON",
+      "address": "199 CAMERON ROAD",
+      "description": "New Fire Station for FENZ",
+      "project_value_nzd": 10400000
+    },
+    {
+      "id": "TGA-2026-07-31-TAURIKURA",
+      "address": "31 TAURIKURA DRIVE",
+      "description": "New internal coolrooms and structural steel support in existing supermarket",
+      "project_value_nzd": 1100000
+    },
+    {
+      "id": "TGA-2026-07-27-MCLEAN",
+      "address": "27 MCLEAN STREET",
+      "description": "Structural, Facade and Roof works only for the New Tauranga High and District Court.",
+      "project_value_nzd": 30400000
+    },
+    {
+      "id": "TGA-2026-07-42-TAREHA",
+      "address": "42 TAREHA LANE",
+      "description": "Wharenui, Paepae, Sleeping/Store, Wharepaku refurbishment. Replace roofing, new internal linings fixtures. Alteration to roof to rear of Wharenui Sleeping/Store. Extend new roof canopy over increased deck area and Paepae.",
+      "project_value_nzd": 1300000
+    }
+  ]
+}
