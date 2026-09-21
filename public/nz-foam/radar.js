@@ -46,11 +46,17 @@ function allLiveRecords(){ return [...liveAucklandRecords,...liveTaurangaRecords
 function recordKey(record){ return `${record.council||"Council"}::${record.consent_reference || record.address || record.description}`; }
 function blankReview(){ return {status:"",owner:"",notes:"",contacted:false,plans:false,quote_value:0,outcome:"open",revenue_won:0}; }
 
+let reviewState = null;
 function loadReviews(){
-  try { return JSON.parse(localStorage.getItem(REVIEW_KEY) || "{}"); }
-  catch { return {}; }
+  if (reviewState) return reviewState;
+  try { reviewState = JSON.parse(localStorage.getItem(REVIEW_KEY) || "{}"); }
+  catch { reviewState = {}; }
+  return reviewState;
 }
-function saveReviews(reviews){ localStorage.setItem(REVIEW_KEY, JSON.stringify(reviews)); }
+function saveReviews(reviews){
+  reviewState = reviews;
+  localStorage.setItem(REVIEW_KEY, JSON.stringify(reviews));
+}
 function reviewFor(record){ return {...blankReview(),...(loadReviews()[recordKey(record)]||{})}; }
 function setReview(key, patch, rerender=true){
   const reviews=loadReviews();
@@ -202,22 +208,20 @@ async function fetchJsonEndpoint(url){
 }
 
 async function loadLiveSources(){
-  const [can,akl,tga]=await Promise.allSettled([
-    fetchJsonEndpoint("/api/canterbury/verified"),
-    fetchJsonEndpoint("/api/auckland/high-value"),
-    fetchJsonEndpoint("/api/tauranga/major")
-  ]);
-
-  if(can.status==="fulfilled") liveCanterburyRecords=[...can.value.records].sort((a,b)=>b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score);
-  else { const el=document.querySelector("#canterburyFoamStatus"); if(el) el.textContent="Canterbury source temporarily unavailable"; }
-
-  if(akl.status==="fulfilled") liveAucklandRecords=[...akl.value.records].sort((a,b)=>(b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score)||(Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0)));
-  else { const el=document.querySelector("#aucklandFoamStatus"); if(el) el.textContent="Auckland source temporarily unavailable"; }
-
-  if(tga.status==="fulfilled") liveTaurangaRecords=[...tga.value.records].sort((a,b)=>(b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score)||(Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0)));
-  else { const el=document.querySelector("#taurangaFoamStatus"); if(el) el.textContent="Tauranga source temporarily unavailable"; }
-
-  renderAllLive();
+  try{
+    const data=await fetchJsonEndpoint("/api/nz-foam/live");
+    liveCanterburyRecords=[...(data.sources?.canterbury?.records||[])].sort((a,b)=>b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score);
+    liveAucklandRecords=[...(data.sources?.auckland?.records||[])].sort((a,b)=>(b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score)||(Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0)));
+    liveTaurangaRecords=[...(data.sources?.tauranga?.records||[])].sort((a,b)=>(b.nz_foam_preliminary_fit_score-a.nz_foam_preliminary_fit_score)||(Number(b.project_value_nzd||0)-Number(a.project_value_nzd||0)));
+    renderAllLive();
+  }catch(error){
+    ["#canterburyFoamStatus","#aucklandFoamStatus","#taurangaFoamStatus"].forEach(selector=>{
+      const el=document.querySelector(selector);
+      if(el) el.textContent="Live feed temporarily unavailable";
+    });
+    const root=document.querySelector("#aucklandFoamRecords");
+    if(root) root.innerHTML=`<div class="notice">${foamEsc(error.message||"Unable to load live feed")}</div>`;
+  }
 }
 
 document.querySelectorAll(".live-filter").forEach(btn=>{
