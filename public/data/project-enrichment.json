@@ -22,7 +22,8 @@
             "https://www.tauranga.govt.nz/Portals/0/data/building-development/planning/resource-consents/files/rc-stats-march-2026.pdf",
             "https://www.ebbett.co.nz/dealership/ebbett-tauranga"
           ],
-          "contact_note": "General Ebbett Tauranga business route. Ask specifically for the person managing the new Tauriko automotive village / 10 Reti Place development."
+          "contact_note": "General Ebbett Tauranga business route. Ask specifically for the person managing the new Tauriko automotive village / 10 Reti Place development.",
+          "direct_person_contact": false
         }
       ],
       "linked_records": [
@@ -31,6 +32,12 @@
           "reference": "80068477",
           "description": "Establish a car yard, showrooms, workshop and ancillary vehicle sales and servicing activities.",
           "source_url": "https://www.tauranga.govt.nz/Portals/0/data/building-development/planning/resource-consents/files/rc-stats-march-2026.pdf"
+        },
+        {
+          "type": "Client project announcement",
+          "reference": "Ebbett Tauranga automotive village",
+          "description": "Ebbett announced a new purpose-built automotive village in Tauriko, planned to open in late 2027.",
+          "source_url": "https://www.ebbett.co.nz/news/ebbett-automotive-announces-new-automotive-village-for-tauranga"
         }
       ]
     },
@@ -55,7 +62,8 @@
             "https://www.gilmours.co.nz/locations/tauranga",
             "https://www.gilmours.co.nz/contact-us.php"
           ],
-          "contact_note": "Public store/customer-service route. Ask for the property/facilities/project person managing the Tauranga coolroom upgrade."
+          "contact_note": "Public store/customer-service route. Ask for the property/facilities/project person managing the Tauranga coolroom upgrade.",
+          "direct_person_contact": false
         }
       ],
       "linked_records": [
@@ -87,7 +95,8 @@
             "https://www.baycourt.co.nz/whats-on/event-details/tctl/24322_eventdetails/event/b1652a33-48b6-4dac-84ee-15f43f9337fa",
             "https://hawkins.co.nz/contact-us/"
           ],
-          "contact_note": "Hawkins is publicly identified with the Tauranga High and District Court project. Call the business and ask for the Tauranga Court project team / roofing-envelope package contact."
+          "contact_note": "Hawkins is publicly identified with the Tauranga High and District Court project. Call the business and ask for the Tauranga Court project team / roofing-envelope package contact.",
+          "direct_person_contact": false
         },
         {
           "organisation": "RCP",
@@ -107,7 +116,8 @@
             "https://rcp.co.nz/contact",
             "https://rcp.co.nz/people/josh-harris"
           ],
-          "contact_note": "RCP is publicly named as a project partner. Josh Harris is RCP's Tauranga Manager; the public evidence does not prove he is the named PM for this specific project."
+          "contact_note": "RCP is publicly named as a project partner. Josh Harris is RCP's Tauranga Manager; the public evidence does not prove he is the named PM for this specific project.",
+          "direct_person_contact": false
         }
       ],
       "linked_records": [
