@@ -167,7 +167,11 @@ function renderRecord(record){
       <a class="source-link" href="${record.source_url}" target="_blank" rel="noreferrer">Open council source ↗</a>
       ${reviewControls(record)}
     </div>
-    <div class="opp-action"><span>Recommended action</span><strong>${foamEsc(record.recommended_action||"Review plans and project team before sales contact.")}</strong></div>
+    <div class="opp-action">
+      <span>Recommended action</span>
+      <strong>${foamEsc(record.recommended_action||"Review plans and project team before sales contact.")}</strong>
+      <a class="button project-open-button" href="/nz-foam/project/?key=${encodeURIComponent(recordKey(record))}">Open project →</a>
+    </div>
   </article>`;
 }
 
