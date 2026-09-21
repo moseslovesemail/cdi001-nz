@@ -77,3 +77,31 @@
  .score-factors{grid-template-columns:1fr}
  .score-factors>div:nth-child(even){padding-left:0;border-left:0}
 }
+
+.pilot-panel{background:#f6f6f4;padding:22px;margin:0 0 28px}
+.pilot-stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #d8d8d8;padding-bottom:18px;margin-bottom:18px}
+.pilot-stats>div{display:grid;gap:5px;border-right:1px solid #d8d8d8;padding:0 18px}
+.pilot-stats>div:first-child{padding-left:0}.pilot-stats>div:last-child{border-right:0}
+.pilot-stats span{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#777}
+.pilot-stats strong{font-size:28px;letter-spacing:-.05em}
+.pilot-actions{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.live-filters{display:flex;gap:7px;flex-wrap:wrap}
+.live-filter,.review-choice{font:inherit;font-size:11px;background:#fff;border:1px solid #ccc;padding:8px 11px;cursor:pointer}
+.live-filter.active,.review-choice.active{background:#111;color:#fff;border-color:#111}
+.export-button{background:#fff;cursor:pointer}
+.pilot-storage-note{font-size:10px;line-height:1.45;color:#777;margin:14px 0 0}
+.review-box{margin-top:16px;border-top:1px solid #ddd;padding-top:12px}
+.review-box summary{font-size:11px;cursor:pointer;color:#555}
+.review-inner{display:grid;grid-template-columns:1fr 150px;gap:12px;margin-top:12px}
+.review-buttons{grid-column:1/-1;display:flex;gap:7px;flex-wrap:wrap}
+.review-inner label{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#777;display:grid;gap:5px}
+.review-inner textarea{grid-column:auto;min-height:58px;resize:vertical}
+.review-inner input,.review-inner textarea{font:inherit;font-size:12px;border:1px solid #ccc;padding:8px;background:#fff;color:#111;text-transform:none;letter-spacing:0}
+.review-chip{font-size:9px!important;padding:4px 7px!important;border:1px solid #bbb}
+.review-relevant{background:#111;color:#fff;border-color:#111}.review-watch{background:#eee}.review-rejected{text-decoration:line-through;color:#777}
+.score-reason{margin-top:10px!important;font-size:11px!important;color:#666!important}
+@media(max-width:700px){
+ .pilot-stats{grid-template-columns:1fr 1fr}.pilot-stats>div{border-right:0;border-bottom:1px solid #ddd;padding:10px 0}
+ .pilot-actions{display:block}.export-button{margin-top:14px;width:100%}
+ .review-inner{grid-template-columns:1fr}
+}
